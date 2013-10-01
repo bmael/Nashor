@@ -31,5 +31,5 @@ public class SubjectMenu extends JPanel{
 		
 		this.add(newButton);
 	}
-	
 }
+	
