@@ -11,7 +11,7 @@ import java.rmi.RemoteException;
  * @author bmael
  *
  */
-public interface IServerForum extends Remote {
+public interface IForumServer extends Remote {
 	
 	/**
 	 * Return the subject with the associated name.
@@ -20,4 +20,6 @@ public interface IServerForum extends Remote {
 	 * @throws RemoteException
 	 */
 	public IServerSubject getSubject(String title) throws RemoteException;
+	
+	public void sayHello() throws RemoteException;
 }
