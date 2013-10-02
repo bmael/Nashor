@@ -4,10 +4,11 @@
 package serverimplementation;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
 import java.util.List;
 
-import remote.IServerForum;
+import remote.IForumServer;
 import remote.IServerSubject;
 
 /**
@@ -15,14 +16,24 @@ import remote.IServerSubject;
  * @author bmael
  *
  */
-public class ForumServer implements IServerForum{
+public class ForumServer extends UnicastRemoteObject 
+						 implements IForumServer
+ {
 
+	/**
+	 * The generated serial version UID
+	 */
+	private static final long serialVersionUID = 5823020808076392213L;
+	
+	/**
+	 * The list of all subject available for clients.
+	 */
 	private List<IServerSubject> subjects;
 	
 	/**
 	 * Construct a new instance of the ForumServer/.
 	 */
-	public ForumServer(){
+	public ForumServer() throws RemoteException{
 		this.subjects = new LinkedList<>();
 	}
 	
@@ -40,6 +51,11 @@ public class ForumServer implements IServerForum{
 		}
 		
 		return null;
+	}
+
+	@Override
+	public void sayHello() throws RemoteException {
+		System.out.println("HELLO!!!");
 	}
 
 }
