@@ -22,13 +22,12 @@ public class ForumServerLauncher {
 	 */
 	public static void main(String[] args) {
 		try{
-//			Registry reg = null;
-//			try {
-//				System.out.println("Trying to registry port 1099");
-//				reg = LocateRegistry.createRegistry(1099);
-//			} catch (Exception e) {
-//				System.out.println("-- Port already in use....");
-//			}
+			try {
+				System.out.println("Trying to registry port 1099");
+				LocateRegistry.createRegistry(1099);
+			} catch (Exception e) {
+				System.out.println("-- Port already in use....");
+			}
 //			
 //			if (reg == null) {
 //				try {
@@ -41,11 +40,11 @@ public class ForumServerLauncher {
 //			}
 //			
 //			try {
-				ForumServer nashor = new ForumServer();
-				
-				String url = "//" + InetAddress.getLocalHost().getHostAddress() + "/NashorServer";
-				System.out.println("Storing the NashorServer with url: " + url);
-				Naming.rebind(url, nashor);
+			ForumServer nashor = new ForumServer();
+			
+			String url = "//" + InetAddress.getLocalHost().getHostAddress() + "/NashorServer";
+			System.out.println("Storing the NashorServer with url: " + url);
+			Naming.rebind(url, nashor);
 //			}
 //			catch (Exception e) {
 //				e.printStackTrace();
