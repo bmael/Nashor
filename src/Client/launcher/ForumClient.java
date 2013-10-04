@@ -3,6 +3,7 @@
  */
 package launcher;
 
+import gui.SelfInternalFrame;
 import gui.SubjectDialog;
 import gui.SubjectMenu;
 
@@ -44,22 +45,7 @@ public class ForumClient extends Applet {
 	public void init(){
 		super.init();
 		
-		this.setLayout(new BorderLayout());
-		
-		this.subjects = new SubjectMenu();
-		this.add(subjects, BorderLayout.NORTH);
-		
-		desktop = new JLayeredPane();
-		desktop.setOpaque(false);
-		
-		this.add(desktop);
-		
-		this.dialog = new SubjectDialog();
-		JInternalFrame frameDialog = this.createLayer("new Conversation", this.dialog, null);
-		
-		desktop.add(frameDialog, JLayeredPane.DRAG_LAYER);
-		desktop.moveToFront(frameDialog);
-		desktop.revalidate();
+		this.initializeUI();
 		
 		//server lookup
 		try{
@@ -85,34 +71,25 @@ public class ForumClient extends Applet {
 	}
 	
 	/**
-	 * Creates a new plugin internal frame
-	 * 
-	 * @param s
-	 *            the title of the new internal frame
-	 * @param p
-	 *            the panel that will be displayed by the new internal frame
-	 * @return
+	 * Initialize GUI component.
 	 */
-	private JInternalFrame createLayer(String s, JPanel p, JMenuBar menubar) {
-		return new SelfInternalFrame(s, p, menubar);
-	}
-
-	static class SelfInternalFrame extends JInternalFrame {
-		private static final long serialVersionUID = 1L;
-
-		public SelfInternalFrame(String s, JPanel p, JMenuBar menuBar) {
-			if (menuBar != null)
-				setJMenuBar(menuBar);
-			getContentPane().add(p, BorderLayout.CENTER);
-			setMinimumSize(new Dimension(200,200));
-			setBounds(50, 50, 200, 200);
-			setResizable(true);
-			setClosable(true);
-			setMaximizable(true);
-			setIconifiable(true);
-			setTitle(s);
-			setVisible(true);
-		}
+	private void initializeUI(){
+		this.setLayout(new BorderLayout());
+		
+		this.subjects = new SubjectMenu();
+		this.add(subjects, BorderLayout.NORTH);
+		
+		desktop = new JLayeredPane();
+		desktop.setOpaque(false);
+		
+		this.add(desktop);
+		
+		this.dialog = new SubjectDialog();
+		JInternalFrame frameDialog = SelfInternalFrame.createLayer("new Conversation", this.dialog, null);
+		
+		desktop.add(frameDialog, JLayeredPane.DRAG_LAYER);
+		desktop.moveToFront(frameDialog);
+		desktop.revalidate();
 	}
 	
 	public void paint(Graphics g) {
