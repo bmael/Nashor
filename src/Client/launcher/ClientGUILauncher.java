@@ -3,8 +3,6 @@ package launcher;
 import java.net.InetAddress;
 import java.rmi.Naming;
 
-import gui.SubjectMenu;
-
 import javax.swing.JFrame;
 
 import remote.IForumServer;
@@ -20,6 +18,7 @@ public class ClientGUILauncher {
 	 * Initialize the MainWindow of the client application.
 	 * @return JFrame the mainWindow 
 	 */
+	@SuppressWarnings("unused")
 	private static JFrame initMainWindow(){
 		JFrame mainWindow = new JFrame("Nashor Chat");
 		

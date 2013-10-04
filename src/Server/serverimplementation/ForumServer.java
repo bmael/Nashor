@@ -35,6 +35,7 @@ public class ForumServer extends UnicastRemoteObject
 	 */
 	public ForumServer() throws RemoteException{
 		this.subjects = new LinkedList<>();
+		this.CreateDefaultSubjects();
 	}
 	
 	/**
@@ -49,7 +50,6 @@ public class ForumServer extends UnicastRemoteObject
 				return subject;
 			}
 		}
-		
 		return null;
 	}
 
@@ -58,4 +58,18 @@ public class ForumServer extends UnicastRemoteObject
 		System.out.println("HELLO!!!");
 	}
 
+	@Override
+	public List<IServerSubject> getAllSubject() throws RemoteException {
+		return this.subjects;
+	}
+	
+	/**
+	 * Create default subjects for the Nashor Chat.
+	 */
+	private void CreateDefaultSubjects(){
+		this.subjects.add(new ServerSubject("Sports"));
+		this.subjects.add(new ServerSubject("Games"));
+		this.subjects.add(new ServerSubject("Movies"));
+		this.subjects.add(new ServerSubject("Cats"));
+	}
 }
