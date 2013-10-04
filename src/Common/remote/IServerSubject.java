@@ -17,7 +17,7 @@ public interface IServerSubject extends Remote {
 	 * @param c
 	 * @throws RemoteException
 	 */
-	public void left(IMessageDisplayer c) throws RemoteException;
+	public void leave(IMessageDisplayer c) throws RemoteException;
 	
 	/**
 	 * Broadcast a message.

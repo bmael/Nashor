@@ -5,16 +5,20 @@ package launcher;
 
 import gui.SelfInternalFrame;
 import gui.SubjectDialog;
+import gui.BackgroundPanel;
 import gui.SubjectMenu;
 
 import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.rmi.Naming;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.swing.JInternalFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JMenuBar;
@@ -34,6 +38,8 @@ public class ForumClient extends Applet {
 	 */
 	private static final long serialVersionUID = -2175181013298400908L;
 
+	private JPanel windowPanel;
+	
 	private JLayeredPane desktop;
 	
 	private SubjectMenu subjects;
@@ -49,7 +55,9 @@ public class ForumClient extends Applet {
 		
 		//server lookup
 		try{
-			String url = "//" + InetAddress.getLocalHost().getHostAddress() + "/NashorServer";
+			String url = "//" + InetAddress.getLocalHost().getHostAddress() + 
+							"/NashorServer";
+			
 			System.out.println("Looking up for Nashor Server at: " + url);
 			IForumServer server = (IForumServer) Naming.lookup(url);
 			
@@ -74,22 +82,40 @@ public class ForumClient extends Applet {
 	 * Initialize GUI component.
 	 */
 	private void initializeUI(){
-		this.setLayout(new BorderLayout());
+		System.out.println(System.getProperty("user.dir")
+				+ "\\Resources\\background.jpg");
+		// The panel of the mainwindow
+		try {
+			windowPanel = new BackgroundPanel(
+					ImageIO.read(new File(
+							System.getProperty("user.dir")
+									+ "\\Resources\\background.jpg")));
+
+		} catch (IOException e) {
+			e.printStackTrace();
+			windowPanel = new JPanel();
+		}
+		
+		windowPanel.setLayout(new BorderLayout());
 		
 		this.subjects = new SubjectMenu();
-		this.add(subjects, BorderLayout.NORTH);
+		windowPanel.add(subjects, BorderLayout.NORTH);
 		
 		desktop = new JLayeredPane();
 		desktop.setOpaque(false);
 		
-		this.add(desktop);
+		windowPanel.add(desktop);
 		
 		this.dialog = new SubjectDialog();
-		JInternalFrame frameDialog = SelfInternalFrame.createLayer("new Conversation", this.dialog, null);
+		JInternalFrame frameDialog = SelfInternalFrame.createLayer("new Conversation",
+																	this.dialog, 
+																	this.dialog.getMenuBar());
 		
 		desktop.add(frameDialog, JLayeredPane.DRAG_LAYER);
 		desktop.moveToFront(frameDialog);
 		desktop.revalidate();
+		
+		this.add(windowPanel);
 	}
 	
 	public void paint(Graphics g) {

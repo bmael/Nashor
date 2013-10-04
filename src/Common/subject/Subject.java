@@ -31,7 +31,7 @@ public class Subject implements IServerSubject{
 	}
 
 	@Override
-	public void left(IMessageDisplayer c) throws RemoteException {
+	public void leave(IMessageDisplayer c) throws RemoteException {
 		this.messageDisplayers.remove(c);
 	}
 

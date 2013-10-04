@@ -4,8 +4,6 @@
 package gui;
 
 import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -23,6 +21,8 @@ public class SubjectDialog extends JPanel{
 	 */
 	private static final long serialVersionUID = -3867762301783478911L;
 	
+	private SubjectDialogMenuBar menuBar;
+	
 	private JTextArea dialog;
 	private JTextField input;
 	private JButton send;
@@ -35,9 +35,14 @@ public class SubjectDialog extends JPanel{
 		this.initializeSubjectDialog();
 	}
 	
+	/**
+	 * Initialize SubjectDialog GUI component.
+	 */
 	private void initializeSubjectDialog(){
 		
 		this.setLayout(new BorderLayout());
+		
+		menuBar = new SubjectDialogMenuBar();
 		
 		dialog = new JTextArea();
 		dialog.setEditable(false);
@@ -54,4 +59,13 @@ public class SubjectDialog extends JPanel{
 		
 		this.add(sendBar, BorderLayout.SOUTH);
 	}
+
+	/**
+	 * Get the subject dialog menu bar.
+	 * @return the subject dialog menu bar of this subject dialog.
+	 */
+	public SubjectDialogMenuBar getMenuBar() {
+		return menuBar;
+	}
+	
 }

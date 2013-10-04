@@ -39,7 +39,7 @@ public class ServerSubject implements IServerSubject, Serializable {
 	 * @see remote.IServerSubject#left(remote.IMessageDisplayer)
 	 */
 	@Override
-	public void left(IMessageDisplayer c) throws RemoteException {
+	public void leave(IMessageDisplayer c) throws RemoteException {
 		// TODO Auto-generated method stub
 
 	}
