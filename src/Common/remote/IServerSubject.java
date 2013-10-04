@@ -27,8 +27,9 @@ public interface IServerSubject extends Remote {
 	public void broadcast(String message) throws RemoteException;
 	
 	/**
-	 * Get the title of this subject
-	 * @return title, the title of this subject
+	 * Return the title of this subject.
+	 * @return title, the title of this subject.
+	 * @throws RemoteException
 	 */
-	public String getTitle();
+	public String getTitle() throws RemoteException;
 }

@@ -43,7 +43,7 @@ public class Subject implements IServerSubject{
 	}
 
 	@Override
-	public String getTitle() {
+	public String getTitle() throws RemoteException {
 		return this.title;
 	}
 

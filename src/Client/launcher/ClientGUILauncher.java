@@ -1,8 +1,13 @@
 package launcher;
 
+import java.net.InetAddress;
+import java.rmi.Naming;
+
 import gui.SubjectMenu;
 
 import javax.swing.JFrame;
+
+import remote.IForumServer;
 
 /**
  * This class is the launcher for Nashor client
@@ -29,14 +34,29 @@ public class ClientGUILauncher {
 	 */
 	public static void main(String[] args) {
 		
-		JFrame mainWindow = ClientGUILauncher.initMainWindow();
+		//server lookup
+		try{
+			String url = "//" + InetAddress.getLocalHost().getHostAddress() + "/NashorServer";
+			System.out.println("Looking up for Nashor Server at: " + url);
+			IForumServer server = (IForumServer) Naming.lookup(url);
+			
+			System.out.println("Server should say hello...");
+			server.sayHello();
+		}catch(Exception e){
+			e.printStackTrace();
+			System.err.println("Unable to contact server...");
+		}
 		
-		SubjectMenu subjectMenu = new SubjectMenu();
-		subjectMenu.addSubject("Sport");
+		//initialization of mainwondow
+//		JFrame mainWindow = ClientGUILauncher.initMainWindow();
+//		
+//		SubjectMenu subjectMenu = new SubjectMenu();
+//		subjectMenu.addSubject("Sport");
+//		
+//		mainWindow.add(subjectMenu);
+//		
+//		mainWindow.setVisible(true);
 		
-		mainWindow.add(subjectMenu);
-		
-		mainWindow.setVisible(true);
 	}
 
 }
