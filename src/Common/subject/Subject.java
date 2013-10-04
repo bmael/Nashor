@@ -18,9 +18,11 @@ import remote.IServerSubject;
 public class Subject implements IServerSubject{
 
 	private List<IMessageDisplayer> messageDisplayers;
+	private String title;
 	
-	public Subject(){
+	public Subject(String title){
 		this.messageDisplayers = new LinkedList<>();
+		this.title = title;
 	}
 	
 	@Override
@@ -38,6 +40,11 @@ public class Subject implements IServerSubject{
 		for (IMessageDisplayer displayer : this.messageDisplayers) {
 			displayer.display(message);
 		}
+	}
+
+	@Override
+	public String getTitle() {
+		return this.title;
 	}
 
 }

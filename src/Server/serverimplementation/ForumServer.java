@@ -25,7 +25,12 @@ public class ForumServer implements IServerForum{
 	
 	@Override
 	public IServerSubject getSubject(String title) throws RemoteException {
-		// TODO Auto-generated method stub
+		for(IServerSubject subject : this.subjects){
+			if(subject.getTitle().equals(title)){
+				return subject;
+			}
+		}
+		
 		return null;
 	}
 
