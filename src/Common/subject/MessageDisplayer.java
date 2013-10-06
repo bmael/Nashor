@@ -18,5 +18,4 @@ public class MessageDisplayer implements IMessageDisplayer{
 	public void display(String message) throws RemoteException {
 		System.out.println(message);
 	}
-
 }

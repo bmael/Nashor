@@ -38,6 +38,7 @@ public class Subject implements IServerSubject{
 	@Override
 	public void broadcast(String message) throws RemoteException {
 		for (IMessageDisplayer displayer : this.messageDisplayers) {
+			System.out.println("Call displayer: "+ displayer.toString());
 			displayer.display(message);
 		}
 	}

@@ -3,12 +3,16 @@
  */
 package gui;
 
+import gui.actionlistener.SendMessageActionListener;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import remote.IServerSubject;
 
 /**
  * @author bmael
@@ -21,6 +25,8 @@ public class SubjectDialog extends JPanel{
 	 */
 	private static final long serialVersionUID = -3867762301783478911L;
 	
+	private IServerSubject subject;
+	
 	private SubjectDialogMenuBar menuBar;
 	
 	private JTextArea dialog;
@@ -30,8 +36,9 @@ public class SubjectDialog extends JPanel{
 	/**
 	 * Construct a new instance of a subject dialog.
 	 */
-	public SubjectDialog(){
+	public SubjectDialog(IServerSubject subject){
 		super();
+		this.subject = subject;
 		this.initializeSubjectDialog();
 	}
 	
@@ -49,6 +56,7 @@ public class SubjectDialog extends JPanel{
 		
 		input = new JTextField("", 10);
 		send = new JButton("Send");
+		send.addActionListener(new SendMessageActionListener(this.subject, this.input));
 		
 		this.add(dialog, BorderLayout.CENTER);
 		
@@ -67,5 +75,15 @@ public class SubjectDialog extends JPanel{
 	public SubjectDialogMenuBar getMenuBar() {
 		return menuBar;
 	}
+
+	/**
+	 * Get the JTextArea where messages will be displayed.
+	 * @return the JTextArea where messages will be displayed.
+	 */
+	public JTextArea getDialog() {
+		return dialog;
+	}
+	
+	
 	
 }

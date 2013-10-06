@@ -5,6 +5,8 @@ package serverimplementation;
 
 import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.util.LinkedList;
+import java.util.List;
 
 import remote.IMessageDisplayer;
 import remote.IServerSubject;
@@ -20,9 +22,11 @@ public class ServerSubject implements IServerSubject, Serializable {
 	 */
 	private static final long serialVersionUID = -7627909707389954486L;
 	
+	private List<IMessageDisplayer> messageDisplayers;
 	private String title;
 	
 	public ServerSubject(String title){
+		this.messageDisplayers = new LinkedList<>();
 		this.title = title;
 	}
 	
@@ -31,8 +35,7 @@ public class ServerSubject implements IServerSubject, Serializable {
 	 */
 	@Override
 	public void join(IMessageDisplayer c) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		this.messageDisplayers.add(c);
 	}
 
 	/* (non-Javadoc)
@@ -40,8 +43,7 @@ public class ServerSubject implements IServerSubject, Serializable {
 	 */
 	@Override
 	public void leave(IMessageDisplayer c) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		this.messageDisplayers.remove(c);
 	}
 
 	/* (non-Javadoc)
@@ -49,8 +51,10 @@ public class ServerSubject implements IServerSubject, Serializable {
 	 */
 	@Override
 	public void broadcast(String message) throws RemoteException {
-		// TODO Auto-generated method stub
-
+		for (IMessageDisplayer displayer : this.messageDisplayers) {
+			System.out.println("Call displayer: "+ displayer.toString());
+			displayer.display(message);
+		}
 	}
 
 	/* (non-Javadoc)

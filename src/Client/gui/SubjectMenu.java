@@ -1,7 +1,14 @@
 package gui;
 
-import javax.swing.JButton;
+import gui.actionlistener.SubjectActionListener;
+
+import java.rmi.RemoteException;
+
+import javax.swing.JComponent;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
+
+import remote.IServerSubject;
 
 /**
  * This class provide a GUI representation for all subjects available for clients
@@ -26,9 +33,16 @@ public class SubjectMenu extends JPanel{
 	 * Add a new subject to the current subject menu.
 	 * @param subjectName
 	 */
-	public void addSubject(String subjectName){
-		JButton newButton = new JButton(subjectName);
+	public void addSubject(IServerSubject subject, JComponent dialogPanel){
+		JToggleButton newButton = new JToggleButton();
 		
+		try {
+			newButton.setText(subject.getTitle());
+			newButton.addActionListener(new SubjectActionListener(subject, dialogPanel));
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+
 		this.add(newButton);
 	}
 }

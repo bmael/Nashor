@@ -3,14 +3,11 @@
  */
 package launcher;
 
-import gui.SelfInternalFrame;
-import gui.SubjectDialog;
 import gui.BackgroundPanel;
 import gui.SubjectMenu;
 
 import java.applet.Applet;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
@@ -19,9 +16,7 @@ import java.rmi.Naming;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.JInternalFrame;
 import javax.swing.JLayeredPane;
-import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 
 import remote.IForumServer;
@@ -43,7 +38,6 @@ public class ForumClient extends Applet {
 	private JLayeredPane desktop;
 	
 	private SubjectMenu subjects;
-	private SubjectDialog dialog;
 	
 	/**
 	 * Initialization of the Forum Client Applet.
@@ -68,7 +62,7 @@ public class ForumClient extends Applet {
 			List<IServerSubject> availaibleSubject = server.getAllSubject();
 			for(IServerSubject subject : availaibleSubject){
 				System.out.println("Adding subject: " + subject.getTitle());
-				this.subjects.addSubject(subject.getTitle());
+				this.subjects.addSubject(subject, desktop);
 			}
 			
 		}catch(Exception e){
@@ -105,15 +99,6 @@ public class ForumClient extends Applet {
 		desktop.setOpaque(false);
 		
 		windowPanel.add(desktop);
-		
-		this.dialog = new SubjectDialog();
-		JInternalFrame frameDialog = SelfInternalFrame.createLayer("new Conversation",
-																	this.dialog, 
-																	this.dialog.getMenuBar());
-		
-		desktop.add(frameDialog, JLayeredPane.DRAG_LAYER);
-		desktop.moveToFront(frameDialog);
-		desktop.revalidate();
 		
 		this.add(windowPanel);
 	}
