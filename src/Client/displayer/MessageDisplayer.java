@@ -4,6 +4,7 @@
 package displayer;
 
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 
 import javax.swing.JTextArea;
 
@@ -13,7 +14,7 @@ import remote.IMessageDisplayer;
  * @author bmael
  *
  */
-public class MessageDisplayer implements IMessageDisplayer {
+public class MessageDisplayer extends UnicastRemoteObject implements IMessageDisplayer {
 	
 	private JTextArea printZone;
 	
@@ -22,14 +23,14 @@ public class MessageDisplayer implements IMessageDisplayer {
 	 * initialize the JTextArea where this displayer have to display the message.
 	 * @param printZone
 	 */
-	public MessageDisplayer(JTextArea printZone){
+	public MessageDisplayer(JTextArea printZone) throws RemoteException{
 		this.printZone = printZone;
 	}
 	
 	/**
 	 * Construct a new instance of a message displayer.
 	 */
-	public MessageDisplayer(){}
+	public MessageDisplayer()  throws RemoteException {}
 	
 	/**
 	 * Set the JTextArea where this displayer have to display the message.

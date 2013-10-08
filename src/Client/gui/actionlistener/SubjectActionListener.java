@@ -40,7 +40,13 @@ public class SubjectActionListener implements ActionListener {
 	 */
 	public SubjectActionListener(IServerSubject subject, JComponent dialogPanel){
 		this.subject = subject;
-		this.displayer = new MessageDisplayer();
+		
+		try{
+
+			this.displayer = new MessageDisplayer();
+		}catch(RemoteException e){
+			System.err.println("Unable to create a new Message Displayer...");
+		}
 		
 		this.firstClick = true;
 		this.dialogPanel = dialogPanel;

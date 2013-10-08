@@ -66,7 +66,7 @@ public class ForumServer extends UnicastRemoteObject
 	/**
 	 * Create default subjects for the Nashor Chat.
 	 */
-	private void CreateDefaultSubjects(){
+	private void CreateDefaultSubjects() throws RemoteException{
 		this.subjects.add(new ServerSubject("Sports"));
 		this.subjects.add(new ServerSubject("Games"));
 		this.subjects.add(new ServerSubject("Movies"));

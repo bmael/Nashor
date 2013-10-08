@@ -3,8 +3,8 @@
  */
 package serverimplementation;
 
-import java.io.Serializable;
 import java.rmi.RemoteException;
+import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,17 +15,17 @@ import remote.IServerSubject;
  * @author bmael
  *
  */
-public class ServerSubject implements IServerSubject, Serializable {
+public class ServerSubject extends UnicastRemoteObject implements IServerSubject {
 	
 	/**
-	 * The generated vesion UID.
+	 * The generated serial version UID.
 	 */
-	private static final long serialVersionUID = -7627909707389954486L;
+	private static final long serialVersionUID = -5696775193014234806L;
 	
 	private List<IMessageDisplayer> messageDisplayers;
 	private String title;
 	
-	public ServerSubject(String title){
+	public ServerSubject(String title) throws RemoteException{
 		this.messageDisplayers = new LinkedList<>();
 		this.title = title;
 	}

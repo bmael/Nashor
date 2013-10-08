@@ -59,11 +59,17 @@ public class ForumClient extends Applet {
 			server.sayHello();
 			
 			//Add all available subjects on the server to the client Subject Menu.
-			List<IServerSubject> availaibleSubject = server.getAllSubject();
-			for(IServerSubject subject : availaibleSubject){
-				System.out.println("Adding subject: " + subject.getTitle());
-				this.subjects.addSubject(subject, desktop);
+			try{
+				List<IServerSubject> availaibleSubject = server.getAllSubject();
+				for(IServerSubject subject : availaibleSubject){
+					System.out.println("Adding subject: " + subject.getTitle());
+					this.subjects.addSubject(subject, desktop);
+				}
+			}catch(Exception e){
+				e.printStackTrace();
+				System.err.println("Unable to retrieve subject list from server...");
 			}
+			
 			
 		}catch(Exception e){
 			e.printStackTrace();
