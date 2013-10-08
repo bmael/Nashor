@@ -46,7 +46,6 @@ public class MessageDisplayer extends UnicastRemoteObject implements IMessageDis
 	@Override
 	public void display(String message) throws RemoteException {
 		this.printZone.setText(this.printZone.getText() + message + "\n");
-		System.out.println("Display in the actual printZone the message: " + message);
 	}
 
 }

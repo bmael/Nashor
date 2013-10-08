@@ -9,8 +9,11 @@ import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.text.DefaultCaret;
 
 import remote.IServerSubject;
 
@@ -29,6 +32,7 @@ public class SubjectDialog extends JPanel{
 	
 	private SubjectDialogMenuBar menuBar;
 	
+	private JScrollPane scroll;
 	private JTextArea dialog;
 	private JTextField input;
 	private JButton send;
@@ -54,11 +58,17 @@ public class SubjectDialog extends JPanel{
 		dialog = new JTextArea();
 		dialog.setEditable(false);
 		
+		DefaultCaret caret = (DefaultCaret)dialog.getCaret();  
+		caret.setUpdatePolicy(DefaultCaret.ALWAYS_UPDATE); 
+		
+		this.scroll = new JScrollPane ( dialog );
+	    scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED );
+		
 		input = new JTextField("", 10);
 		send = new JButton("Send");
 		send.addActionListener(new SendMessageActionListener(this.subject, this.input));
 		
-		this.add(dialog, BorderLayout.CENTER);
+		this.add(scroll, BorderLayout.CENTER);
 		
 		JPanel sendBar = new JPanel();
 		
