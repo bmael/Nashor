@@ -4,6 +4,7 @@
 package gui.actionlistener;
 
 import gui.SelfInternalFrame;
+import gui.SelfInternalFrameAdapter;
 import gui.SubjectDialog;
 
 import java.awt.event.ActionEvent;
@@ -29,8 +30,8 @@ public class SubjectActionListener implements ActionListener {
 	private IServerSubject subject;
 	private IMessageDisplayer displayer;
 	
-	private boolean firstClick;
 	private JComponent dialogPanel;
+	private JInternalFrame frame;
 
 	
 	/**
@@ -42,13 +43,11 @@ public class SubjectActionListener implements ActionListener {
 		this.subject = subject;
 		
 		try{
-
 			this.displayer = new MessageDisplayer();
 		}catch(RemoteException e){
 			System.err.println("Unable to create a new Message Displayer...");
 		}
 		
-		this.firstClick = true;
 		this.dialogPanel = dialogPanel;
 	}
 	
@@ -58,15 +57,19 @@ public class SubjectActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent actionEvent) {
 		//If it the first click on the subject, the client joins the discussion
-		if(this.firstClick){
+		if(((JToggleButton)actionEvent.getSource()).isSelected()){
 			SubjectDialog dialog = new SubjectDialog(this.subject);
 			try {
-				JInternalFrame frameDialog = SelfInternalFrame.createLayer(this.subject.getTitle(),
+				frame = SelfInternalFrame.createLayer(this.subject.getTitle(),
 																			dialog, 
 																			dialog.getMenuBar());
-				dialogPanel.add(frameDialog, JLayeredPane.DRAG_LAYER);
-				((JLayeredPane) dialogPanel).moveToFront(frameDialog);
+				frame.addInternalFrameListener(new SelfInternalFrameAdapter((JToggleButton)actionEvent.getSource()));
+				
+				dialogPanel.add(frame, JLayeredPane.DRAG_LAYER);
+				((JLayeredPane) dialogPanel).moveToFront(frame);
 				dialogPanel.revalidate();
+				
+				((JToggleButton)actionEvent.getSource()).setSelected(true);
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
@@ -76,19 +79,23 @@ public class SubjectActionListener implements ActionListener {
 			try {
 				this.subject.join(displayer);
 				System.out.println("A displayer joined subject: " + subject.getTitle());
-				this.subject.broadcast("New User joins the chat...");
+				this.subject.broadcast("New User joins the discussion...");
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
 
 		}else{ //else : the client have already click, he leaves the discussion
-			
-		}
-		
-		// button selection state according to the firstClick attribute
-		((JToggleButton)actionEvent.getSource()).setSelected(this.firstClick);
-		
-		this.firstClick = !this.firstClick;
+			try {
+				System.out.println("A displayer leave subject: " + subject.getTitle());
+				this.subject.leave(displayer);
+				dialogPanel.remove(frame);
+				dialogPanel.revalidate();
+				dialogPanel.repaint();
+			} catch (RemoteException e) {
+				e.printStackTrace();
+				System.err.println("Unable to leave discussion...");
+			}
+		}		
 	}
 
 }

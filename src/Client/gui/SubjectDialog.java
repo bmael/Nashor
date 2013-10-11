@@ -8,6 +8,7 @@ import gui.actionlistener.SendMessageActionListener;
 import java.awt.BorderLayout;
 
 import javax.swing.JButton;
+import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -33,7 +34,7 @@ public class SubjectDialog extends JPanel{
 	private SubjectDialogMenuBar menuBar;
 	
 	private JScrollPane scroll;
-	private JTextArea dialog;
+	private JEditorPane dialog;
 	private JTextField input;
 	private JButton send;
 	
@@ -55,7 +56,7 @@ public class SubjectDialog extends JPanel{
 		
 		menuBar = new SubjectDialogMenuBar();
 		
-		dialog = new JTextArea();
+		dialog = new JEditorPane();
 		dialog.setEditable(false);
 		
 		DefaultCaret caret = (DefaultCaret)dialog.getCaret();  
@@ -88,9 +89,9 @@ public class SubjectDialog extends JPanel{
 
 	/**
 	 * Get the JTextArea where messages will be displayed.
-	 * @return the JTextArea where messages will be displayed.
+	 * @return the JEditorPane where messages will be displayed.
 	 */
-	public JTextArea getDialog() {
+	public JEditorPane getDialog() {
 		return dialog;
 	}
 	

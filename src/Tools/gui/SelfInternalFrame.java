@@ -25,7 +25,7 @@ public class SelfInternalFrame extends JInternalFrame {
 		if (menuBar != null)
 			setJMenuBar(menuBar);
 		getContentPane().add(p, BorderLayout.CENTER);
-		setMinimumSize(new Dimension(200,200));
+		//setMinimumSize(new Dimension(200,200));
 		setBounds(50, 50, 200, 200);
 		setResizable(true);
 		setClosable(true);
