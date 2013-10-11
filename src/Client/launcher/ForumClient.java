@@ -20,6 +20,8 @@ import javax.imageio.ImageIO;
 import javax.swing.JDesktopPane;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import remote.IForumServer;
 import remote.IServerSubject;
@@ -84,6 +86,29 @@ public class ForumClient extends Applet {
 	 * Initialize GUI component.
 	 */
 	private void initializeUI(){
+		
+		/*
+		 * Setting the system look & feel(The applet will look like any other application of your current OS).
+		 * DON'T KILL ME
+		 */
+		try {
+			// Set cross-platform Java L&F (also called "Metal")
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		}
+		catch (UnsupportedLookAndFeelException e) {
+			// handle exception
+		}
+		catch (ClassNotFoundException e) {
+			// handle exception
+		}
+		catch (InstantiationException e) {
+			// handle exception
+		}
+		catch (IllegalAccessException e) {
+			// handle exception
+		}
+		
+		
 		System.out.println(System.getProperty("user.dir")
 				+ "\\Resources\\background.jpg");
 		// The panel of the mainwindow
