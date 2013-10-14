@@ -16,6 +16,10 @@ import remote.IMessageDisplayer;
  */
 public class MessageDisplayer extends UnicastRemoteObject implements IMessageDisplayer {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6468219716789966797L;
 	private JTextArea printZone;
 	
 	/**
