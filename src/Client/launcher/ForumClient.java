@@ -8,6 +8,7 @@ import gui.SubjectMenu;
 
 import java.applet.Applet;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import java.rmi.Naming;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.JDesktopPane;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
@@ -47,6 +49,8 @@ public class ForumClient extends Applet {
 	public void init(){
 		super.init();
 		
+	
+		
 		this.initializeUI();
 		
 		//server lookup
@@ -71,8 +75,6 @@ public class ForumClient extends Applet {
 				e.printStackTrace();
 				System.err.println("Unable to retrieve subject list from server...");
 			}
-			
-			
 		}catch(Exception e){
 			e.printStackTrace();
 			System.err.println("Unable to contact server...");
