@@ -3,6 +3,7 @@
  */
 package gui;
 
+import general.User;
 import gui.actionlistener.SendMessageActionListener;
 
 import java.awt.BorderLayout;
@@ -11,7 +12,6 @@ import javax.swing.JButton;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.text.DefaultCaret;
@@ -38,12 +38,15 @@ public class SubjectDialog extends JPanel{
 	private JTextField input;
 	private JButton send;
 	
+	private User user;
+	
 	/**
 	 * Construct a new instance of a subject dialog.
 	 */
-	public SubjectDialog(IServerSubject subject){
+	public SubjectDialog(IServerSubject subject, User user){
 		super();
 		this.subject = subject;
+		this.user = user;
 		this.initializeSubjectDialog();
 	}
 	
@@ -67,7 +70,7 @@ public class SubjectDialog extends JPanel{
 		
 		input = new JTextField("", 10);
 		send = new JButton("Send");
-		send.addActionListener(new SendMessageActionListener(this.subject, this.input));
+		send.addActionListener(new SendMessageActionListener(this.subject, this.input, this.user));
 		
 		this.add(scroll, BorderLayout.CENTER);
 		

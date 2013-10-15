@@ -1,5 +1,6 @@
 package gui;
 
+import general.User;
 import gui.actionlistener.SubjectActionListener;
 
 import java.rmi.RemoteException;
@@ -21,12 +22,14 @@ public class SubjectMenu extends JPanel{
 	 * Generated serialVersionUID
 	 */
 	private static final long serialVersionUID = -1872063443614599300L;
-
+	private User user;
+	
 	/**
 	 * Construct a new instance of a SubjectMenu
 	 */
-	public SubjectMenu(){
+	public SubjectMenu(User user){
 		super();
+		this.user = user;
 	}
 	
 	/**
@@ -35,10 +38,9 @@ public class SubjectMenu extends JPanel{
 	 */
 	public void addSubject(IServerSubject subject, JComponent dialogPanel){
 		JToggleButton newButton = new JToggleButton();
-		
 		try {
 			newButton.setText(subject.getTitle());
-			newButton.addActionListener(new SubjectActionListener(subject, dialogPanel));
+			newButton.addActionListener(new SubjectActionListener(subject, dialogPanel, this.user));
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}

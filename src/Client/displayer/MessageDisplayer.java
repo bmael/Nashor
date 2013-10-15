@@ -3,11 +3,12 @@
  */
 package displayer;
 
+import general.User;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import javax.swing.JEditorPane;
-import javax.swing.JTextArea;
 
 import remote.IMessageDisplayer;
 

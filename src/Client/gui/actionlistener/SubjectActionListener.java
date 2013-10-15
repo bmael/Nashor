@@ -3,6 +3,7 @@
  */
 package gui.actionlistener;
 
+import general.User;
 import gui.SelfInternalFrame;
 import gui.SelfInternalFrameAdapter;
 import gui.SubjectDialog;
@@ -29,6 +30,7 @@ public class SubjectActionListener implements ActionListener {
 
 	private IServerSubject subject;
 	private IMessageDisplayer displayer;
+	private User user;
 	
 	private JComponent dialogPanel;
 	private JInternalFrame frame;
@@ -39,8 +41,9 @@ public class SubjectActionListener implements ActionListener {
 	 * @param subject associated to the button.
 	 * @param dialogPanel the panel where discussion will be placed on the GUI.
 	 */
-	public SubjectActionListener(IServerSubject subject, JComponent dialogPanel){
+	public SubjectActionListener(IServerSubject subject, JComponent dialogPanel, User user){
 		this.subject = subject;
+		this.user = user;
 		
 		try{
 			this.displayer = new MessageDisplayer();
@@ -58,7 +61,7 @@ public class SubjectActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent actionEvent) {
 		//If it the first click on the subject, the client joins the discussion
 		if(((JToggleButton)actionEvent.getSource()).isSelected()){
-			SubjectDialog dialog = new SubjectDialog(this.subject);
+			SubjectDialog dialog = new SubjectDialog(this.subject, this.user);
 			try {
 				frame = SelfInternalFrame.createLayer(this.subject.getTitle(),
 																			dialog, 

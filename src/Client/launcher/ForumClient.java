@@ -3,22 +3,24 @@
  */
 package launcher;
 
+import general.User;
 import gui.BackgroundPanel;
 import gui.SubjectMenu;
+import gui.UserPanel;
 
 import java.applet.Applet;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.Naming;
 import java.util.List;
 
 import javax.imageio.ImageIO;
-import javax.swing.JDesktopPane;
 import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -42,6 +44,10 @@ public class ForumClient extends Applet {
 	private JLayeredPane desktop;
 	
 	private SubjectMenu subjects;
+	private UserPanel userPanel;
+	private User user;
+	
+	private String serverAddress;
 	
 	/**
 	 * Initialization of the Forum Client Applet.
@@ -49,7 +55,14 @@ public class ForumClient extends Applet {
 	public void init(){
 		super.init();
 		
-	
+		this.user = new User();
+		
+		try {
+			this.serverAddress = JOptionPane.showInputDialog(this, "Server address:", "//" + InetAddress.getLocalHost().getHostAddress() + 
+					"/NashorServer");
+		} catch (UnknownHostException e1) {
+			e1.printStackTrace();
+		}
 		
 		this.initializeUI();
 		
@@ -59,7 +72,7 @@ public class ForumClient extends Applet {
 							"/NashorServer";
 			
 			System.out.println("Looking up for Nashor Server at: " + url);
-			IForumServer server = (IForumServer) Naming.lookup(url);
+			IForumServer server = (IForumServer) Naming.lookup(this.serverAddress);
 			
 			System.out.println("Server should say hello...");
 			server.sayHello();
@@ -107,17 +120,13 @@ public class ForumClient extends Applet {
 		catch (IllegalAccessException e) {
 			// handle exception
 		}
-		
-		
-		System.out.println(System.getProperty("user.dir")
-				+ "\\Resources\\background.jpg");
+
 		// The panel of the mainwindow
 		try {
 			windowPanel = new BackgroundPanel(
 					ImageIO.read(new File(
 							System.getProperty("user.dir")
 									+ "\\Resources\\background.jpg")));
-
 		} catch (IOException e) {
 			e.printStackTrace();
 			windowPanel = new JPanel();
@@ -125,11 +134,14 @@ public class ForumClient extends Applet {
 		
 		windowPanel.setLayout(new BorderLayout());
 		
-		this.subjects = new SubjectMenu();
+		this.subjects = new SubjectMenu(this.user);
 		windowPanel.add(subjects, BorderLayout.NORTH);
 		
 		desktop = new JLayeredPane();
 		desktop.setOpaque(false);
+		
+		this.userPanel = new UserPanel(user);
+		this.add(userPanel);
 		
 		windowPanel.add(desktop);
 		
