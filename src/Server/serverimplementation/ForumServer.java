@@ -8,6 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
 import java.util.List;
 
+import remote.IClient;
 import remote.IForumServer;
 import remote.IServerSubject;
 
@@ -31,10 +32,16 @@ public class ForumServer extends UnicastRemoteObject
 	private List<IServerSubject> subjects;
 	
 	/**
+	 * The list of the Clients connected to this server.
+	 */
+	private List<IClient> clients;
+	
+	/**
 	 * Construct a new instance of the ForumServer/.
 	 */
 	public ForumServer() throws RemoteException{
 		this.subjects = new LinkedList<>();
+		this.clients = new LinkedList<>();
 		this.CreateDefaultSubjects();
 	}
 	
@@ -71,5 +78,20 @@ public class ForumServer extends UnicastRemoteObject
 		this.subjects.add(new ServerSubject("Games"));
 		this.subjects.add(new ServerSubject("Movies"));
 		this.subjects.add(new ServerSubject("Cats"));
+	}
+
+	@Override
+	public void join(IClient client) {
+		this.clients.add(client);
+		
+		int connectedClientNumber = this.clients.size();
+		
+		for(IClient c : this.clients){
+			try {
+				c.updateConnectedUsersNumber(connectedClientNumber);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

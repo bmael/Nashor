@@ -3,7 +3,7 @@
  */
 package displayer;
 
-import general.User;
+import general.Client;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;

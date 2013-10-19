@@ -13,6 +13,11 @@ import java.util.List;
  *
  */
 public interface IForumServer extends Remote {
+		
+	/**
+	 * Increment the number of connected user by one.
+	 */
+	public void join(IClient client) throws RemoteException;
 	
 	/**
 	 * Return the subject with the associated name.
@@ -24,7 +29,7 @@ public interface IForumServer extends Remote {
 	
 	/**
 	 * Return the list of all subjects available on the server. 
-	 * @return subjects, a List of IServerSubject wich is the all available subject list.
+	 * @return subjects, a List of IServerSubject which is the all available subject list.
 	 * @throws RemoteException
 	 */
 	public List<IServerSubject> getAllSubject() throws RemoteException;

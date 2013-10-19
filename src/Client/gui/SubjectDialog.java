@@ -3,8 +3,9 @@
  */
 package gui;
 
-import general.User;
+import general.Client;
 import gui.actionlistener.SendMessageActionListener;
+import gui.keylistener.ValidEnterKeyAdapter;
 
 import java.awt.BorderLayout;
 
@@ -38,12 +39,12 @@ public class SubjectDialog extends JPanel{
 	private JTextField input;
 	private JButton send;
 	
-	private User user;
+	private Client user;
 	
 	/**
 	 * Construct a new instance of a subject dialog.
 	 */
-	public SubjectDialog(IServerSubject subject, User user){
+	public SubjectDialog(IServerSubject subject, Client user){
 		super();
 		this.subject = subject;
 		this.user = user;
@@ -69,8 +70,11 @@ public class SubjectDialog extends JPanel{
 	    scroll.setVerticalScrollBarPolicy ( ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED );
 		
 		input = new JTextField("", 10);
+		
 		send = new JButton("Send");
 		send.addActionListener(new SendMessageActionListener(this.subject, this.input, this.user));
+		
+		input.addKeyListener(new ValidEnterKeyAdapter(this.send));
 		
 		this.add(scroll, BorderLayout.CENTER);
 		

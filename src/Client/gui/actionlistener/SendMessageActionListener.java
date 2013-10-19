@@ -3,7 +3,7 @@
  */
 package gui.actionlistener;
 
-import general.User;
+import general.Client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -22,14 +22,14 @@ public class SendMessageActionListener implements ActionListener{
 
 	private IServerSubject subject;
 	private JTextField textField;
-	private User user;
+	private Client user;
 	
 	/**
 	 * Construct a new instance of an action listener for a send button.
 	 * @param subject
 	 * @param textField
 	 */
-	public SendMessageActionListener(IServerSubject subject, JTextField textField, User user){
+	public SendMessageActionListener(IServerSubject subject, JTextField textField, Client user){
 		this.subject = subject;
 		this.textField = textField;
 		this.user = user;

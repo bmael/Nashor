@@ -1,10 +1,11 @@
 package gui;
 
-import general.User;
+import general.Client;
 import gui.actionlistener.SubjectActionListener;
 
 import java.rmi.RemoteException;
 
+import javax.swing.BoxLayout;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -22,13 +23,16 @@ public class SubjectMenu extends JPanel{
 	 * Generated serialVersionUID
 	 */
 	private static final long serialVersionUID = -1872063443614599300L;
-	private User user;
+	private Client user;
 	
 	/**
 	 * Construct a new instance of a SubjectMenu
 	 */
-	public SubjectMenu(User user){
+	public SubjectMenu(Client user){
 		super();
+		
+		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
 		this.user = user;
 	}
 	
