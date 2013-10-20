@@ -1,12 +1,9 @@
 package gui;
 
-import general.Client;
 import gui.actionlistener.ValidUserNameActionListener;
 import gui.keylistener.ValidEnterKeyAdapter;
 
 import java.awt.Color;
-import java.io.File;
-import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,6 +12,8 @@ import javax.swing.JTextField;
 
 import org.jdesktop.xswingx.PromptSupport;
 
+import remote.IClient;
+
 public class UserPanel extends JPanel{
 
 	/**
@@ -22,12 +21,12 @@ public class UserPanel extends JPanel{
 	 */
 	private static final long serialVersionUID = -449738241414461419L;
 
-	private Client user;
+	private IClient user;
 	
 	private JTextField name;
 	private JButton validButton;
 	
-	public UserPanel(Client user){
+	public UserPanel(IClient user){
 		this.user = user;
 
 		this.init();

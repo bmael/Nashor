@@ -3,14 +3,13 @@
  */
 package gui.actionlistener;
 
-import general.Client;
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
 
 import javax.swing.JTextField;
 
+import remote.IClient;
 import remote.IServerSubject;
 
 /**
@@ -22,14 +21,14 @@ public class SendMessageActionListener implements ActionListener{
 
 	private IServerSubject subject;
 	private JTextField textField;
-	private Client user;
+	private IClient user;
 	
 	/**
 	 * Construct a new instance of an action listener for a send button.
 	 * @param subject
 	 * @param textField
 	 */
-	public SendMessageActionListener(IServerSubject subject, JTextField textField, Client user){
+	public SendMessageActionListener(IServerSubject subject, JTextField textField, IClient user){
 		this.subject = subject;
 		this.textField = textField;
 		this.user = user;

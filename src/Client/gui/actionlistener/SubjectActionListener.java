@@ -3,7 +3,6 @@
  */
 package gui.actionlistener;
 
-import general.Client;
 import gui.SelfInternalFrame;
 import gui.SelfInternalFrameAdapter;
 import gui.SubjectDialog;
@@ -17,6 +16,7 @@ import javax.swing.JInternalFrame;
 import javax.swing.JLayeredPane;
 import javax.swing.JToggleButton;
 
+import remote.IClient;
 import remote.IMessageDisplayer;
 import remote.IServerSubject;
 import displayer.MessageDisplayer;
@@ -30,7 +30,7 @@ public class SubjectActionListener implements ActionListener {
 
 	private IServerSubject subject;
 	private IMessageDisplayer displayer;
-	private Client user;
+	private IClient user;
 	
 	private JComponent dialogPanel;
 	private JInternalFrame frame;
@@ -41,7 +41,7 @@ public class SubjectActionListener implements ActionListener {
 	 * @param subject associated to the button.
 	 * @param dialogPanel the panel where discussion will be placed on the GUI.
 	 */
-	public SubjectActionListener(IServerSubject subject, JComponent dialogPanel, Client user){
+	public SubjectActionListener(IServerSubject subject, JComponent dialogPanel, IClient user){
 		this.subject = subject;
 		this.user = user;
 		
@@ -91,6 +91,7 @@ public class SubjectActionListener implements ActionListener {
 			try {
 				System.out.println("A displayer leave subject: " + subject.getTitle());
 				this.subject.leave(displayer);
+				this.subject.broadcast(this.user.getName() + " has left the discussion...");
 				dialogPanel.remove(frame);
 				dialogPanel.revalidate();
 				dialogPanel.repaint();

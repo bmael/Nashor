@@ -3,12 +3,10 @@
  */
 package displayer;
 
-import general.Client;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
-import javax.swing.JEditorPane;
+import javax.swing.JTextPane;
 
 import remote.IMessageDisplayer;
 
@@ -23,14 +21,14 @@ public class MessageDisplayer extends UnicastRemoteObject implements IMessageDis
 	 */
 	private static final long serialVersionUID = -6468219716789966797L;
 	
-	private JEditorPane printZone;
+	private JTextPane printZone;
 	
 	/**
 	 * Construct a new instance of a message displayer and 
 	 * initialize the JTextArea where this displayer have to display the message.
 	 * @param printZone
 	 */
-	public MessageDisplayer(JEditorPane printZone) throws RemoteException{
+	public MessageDisplayer(JTextPane printZone) throws RemoteException{
 		this.printZone = printZone;
 	}
 	
@@ -43,7 +41,7 @@ public class MessageDisplayer extends UnicastRemoteObject implements IMessageDis
 	 * Set the JTextArea where this displayer have to display the message.
 	 * @param printZone the JEditorPane where this displayer have to display the message.
 	 */
-	public void setPrintZone(JEditorPane printZone){
+	public void setPrintZone(JTextPane printZone){
 		this.printZone = printZone;
 	}
 	
