@@ -5,6 +5,7 @@ package remote;
 
 import java.rmi.Remote;
 import java.rmi.RemoteException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -39,4 +40,11 @@ public interface IForumServer extends Remote {
 	 * @throws RemoteException
 	 */
 	public void sayHello() throws RemoteException;
+	
+	/**
+	 * Return the current server date.
+	 * @return the current server date.
+	 * @throws RemoteException
+	 */
+	public Date getDate() throws RemoteException;
 }
