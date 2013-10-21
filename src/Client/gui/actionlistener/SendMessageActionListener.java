@@ -6,6 +6,7 @@ package gui.actionlistener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.RemoteException;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JTextField;
 
@@ -38,8 +39,8 @@ public class SendMessageActionListener implements ActionListener{
 	public void actionPerformed(ActionEvent arg0) {
 		if(!textField.getText().equals("")){
 			try {
-				System.out.println("Broadcasting message: " + textField.getText());
-				subject.broadcast(this.user.getName() + ": " + textField.getText());
+				SimpleDateFormat ft = new SimpleDateFormat("[H:mm]");
+				subject.broadcast(ft.format(this.user.getServer().getDate()) + " " + this.user + ": " + textField.getText());
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}

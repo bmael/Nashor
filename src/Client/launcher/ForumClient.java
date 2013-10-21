@@ -8,7 +8,6 @@ import gui.BackgroundPanel;
 import gui.SubjectMenu;
 import gui.UserPanel;
 
-import java.applet.Applet;
 import java.awt.BorderLayout;
 import java.io.File;
 import java.io.IOException;
@@ -35,12 +34,7 @@ import remote.IServerSubject;
  * @author bmael
  *
  */
-public class ForumClient extends Applet {
-
-	/**
-	 * The generated serial version UID.
-	 */
-	private static final long serialVersionUID = -2175181013298400908L;
+public class ForumClient {
 
 	/* GUI part */
 	private static JFrame mainWindow;
@@ -66,23 +60,14 @@ public class ForumClient extends Applet {
 		 * Setting the system look & feel(The applet will look like any other application of your current OS).
 		 * DON'T KILL ME
 		 */
+		// Set cross-platform Java L&F (also called "Metal")
 		try {
-			// Set cross-platform Java L&F (also called "Metal")
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException
+				| IllegalAccessException | UnsupportedLookAndFeelException e1) {
+			e1.printStackTrace();
 		}
-		catch (UnsupportedLookAndFeelException e) {
-			// handle exception
-		}
-		catch (ClassNotFoundException e) {
-			// handle exception
-		}
-		catch (InstantiationException e) {
-			// handle exception
-		}
-		catch (IllegalAccessException e) {
-			// handle exception
-		}
-
+		
 		// The panel of the mainwindow
 		try {
 			windowPanel = new BackgroundPanel(
@@ -114,7 +99,12 @@ public class ForumClient extends Applet {
 		subjects = new SubjectMenu(user);
 		rightMenuPanel.add(subjects);
 		
-		connectedUsers = new JLabel();
+		try {
+			connectedUsers = user.getConnectedUsersNumberLabel();
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		
 		rightMenuPanel.add(connectedUsers);
 		
 		mainWindow.add(windowPanel, BorderLayout.CENTER);
@@ -124,23 +114,18 @@ public class ForumClient extends Applet {
 	}
 	
 	/**
-	 * Initialization of the Forum Client.
+	 * Launcher of the Forum Client.
 	 */
 	public static void main(String args[]){
 		
-		try {
-			user = new Client();
-			
+		try {				
 			try {
 				serverAddress = JOptionPane.showInputDialog(mainWindow, "Server address:", "//" + InetAddress.getLocalHost().getHostAddress() + 
 						"/NashorServer");
 			} catch (UnknownHostException e1) {
 				e1.printStackTrace();
 			}
-			
-			// Initialize the client main window.
-			initMainWindow();
-			
+							
 			//server lookup
 			try{
 				String url = "//" + InetAddress.getLocalHost().getHostAddress() + 
@@ -153,7 +138,12 @@ public class ForumClient extends Applet {
 				System.out.println("Server should say hello...");
 				server.sayHello();
 				
+				user = new Client(server);
+				
 				server.join(user);
+				
+				// Initialize the client main window.
+				initMainWindow();
 				
 				//Add all available subjects on the server to the client Subject Menu.
 				try{
@@ -167,18 +157,14 @@ public class ForumClient extends Applet {
 					System.err.println("Unable to retrieve subject list from server...");
 				}
 				
-				connectedUsers.setText("Connected users: " + user.getConnectedUsersNumber());
 				mainWindow.revalidate();
 				
-			
 			} catch (RemoteException e) {
 				e.printStackTrace();
 				System.err.println("Unable to contact server...");
 				System.exit(0);
-				
 			}
-		}
-		catch(Exception e2){
+		} catch(Exception e2){
 			e2.printStackTrace();
 			System.err.println("Unable to create the client...");
 			System.exit(0);
