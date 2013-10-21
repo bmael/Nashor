@@ -5,6 +5,7 @@ package serverimplementation;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -51,7 +52,7 @@ public class ForumServer extends UnicastRemoteObject
 	 * @return the subject with the given title, or null if no subject has the given title.
 	 */
 	@Override
-	public IServerSubject getSubject(String title) throws RemoteException {
+	public synchronized IServerSubject getSubject(String title) throws RemoteException {
 		for(IServerSubject subject : this.subjects){
 			if(subject.getTitle().equals(title)){
 				return subject;
@@ -61,12 +62,12 @@ public class ForumServer extends UnicastRemoteObject
 	}
 
 	@Override
-	public void sayHello() throws RemoteException {
+	public synchronized void sayHello() throws RemoteException {
 		System.out.println("HELLO!!!");
 	}
 
 	@Override
-	public List<IServerSubject> getAllSubject() throws RemoteException {
+	public synchronized List<IServerSubject> getAllSubject() throws RemoteException {
 		return this.subjects;
 	}
 	
@@ -81,7 +82,14 @@ public class ForumServer extends UnicastRemoteObject
 	}
 
 	@Override
-	public void join(IClient client) {
+	public synchronized void join(IClient client) {
+		
+		try {
+			this.getNewClientId(client);
+		} catch (RemoteException e1) {
+			e1.printStackTrace();
+		}
+		
 		this.clients.add(client);
 		
 		int connectedClientNumber = this.clients.size();
@@ -92,6 +100,21 @@ public class ForumServer extends UnicastRemoteObject
 			} catch (RemoteException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+
+	@Override
+	public Date getDate() throws RemoteException {
+		Date now = new Date();
+		return now;
+	}
+
+	private void getNewClientId(IClient client) throws RemoteException {
+		if(this.clients.isEmpty()){
+			client.setId(1);
+		}
+		else{
+			client.setId(this.clients.get(this.clients.size() - 1).getId() + 1);
 		}
 	}
 }
