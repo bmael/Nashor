@@ -29,7 +29,7 @@ public class MainWindowListener implements WindowListener {
 
 	@Override
 	public void windowClosed(WindowEvent arg0) {
-		System.out.println("Exited...");
+		System.out.println("Exited...");	
 	}
 
 	@Override
@@ -41,6 +41,7 @@ public class MainWindowListener implements WindowListener {
 			System.err.println("Unable to disconnect the client...");
 			e.printStackTrace();
 		}
+		System.exit(0);
 	}
 
 	@Override
