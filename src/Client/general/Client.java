@@ -3,6 +3,9 @@
  */
 package general;
 
+import gui.MainWindow;
+import interfaces.IMainWindow;
+
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
@@ -28,21 +31,24 @@ public class Client extends UnicastRemoteObject implements IClient{
 	
 	private String name;
 	private IForumServer server;
+	private IMainWindow gui;
 	
-	private JLabel connectedUsersNumber;
+	//private JLabel connectedUsersNumber;
 	
 	public Client(IForumServer server) throws RemoteException {
 		id = id ++;
 		this.server = server;
-		this.connectedUsersNumber = new JLabel("Connected users:" + 0);
+		//this.connectedUsersNumber = new JLabel("Connected users:" + 0);
 		this.name = "";
+		this.gui = new MainWindow(this);
 	}
 	
 	public Client(IForumServer server, String name) throws RemoteException {
 		id = id ++;
 		this.server = server;
-		this.connectedUsersNumber = new JLabel("Connected users:" + 0);
+		//this.connectedUsersNumber = new JLabel("Connected users:" + 0);
 		this.name = name;
+		this.gui = new MainWindow(this);
 	}
 	
 	public String getName() throws RemoteException {
@@ -55,12 +61,13 @@ public class Client extends UnicastRemoteObject implements IClient{
 
 	@Override
 	public void updateConnectedUsersNumber(int newValue) throws RemoteException {
-		this.connectedUsersNumber = new JLabel("Connected users:" + newValue);
+		//this.connectedUsersNumber = new JLabel("Connected users:" + newValue);
 	}
 
 	@Override
 	public JLabel getConnectedUsersNumberLabel() throws RemoteException {
-		return this.connectedUsersNumber;		
+		//return this.connectedUsersNumber;		
+		return null;
 	}
 
 	@Override
@@ -85,6 +92,9 @@ public class Client extends UnicastRemoteObject implements IClient{
 
 	@Override
 	public List<IServerSubject> getAvailableSubjects() throws RemoteException {
-		return this.server.getAllSubject();
+		List<IServerSubject> subjects = this.server.getAllSubject(); 
+		this.gui.addSubjects(subjects);
+		this.gui.refresh();
+		return subjects;
 	}
 }
