@@ -7,6 +7,12 @@ import java.util.List;
 public interface IClient extends Remote {
 	
 	/**
+	 * This client exiting the application.
+	 * @throws RemoteException
+	 */
+	public void exit() throws RemoteException;
+	
+	/**
 	 * Set the name of this client.
 	 * @param name, the name of this client.
 	 * @throws RemoteException

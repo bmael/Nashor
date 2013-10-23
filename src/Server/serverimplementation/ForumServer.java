@@ -139,4 +139,22 @@ public class ForumServer extends UnicastRemoteObject
 		}
 	}
 
+	@Override
+	public void left(IClient client) throws RemoteException {
+		
+		// remove all subject administrate by this client	
+		for(int i= this.subjects.size() - 1; i > 0; i-- ){
+			if(this.subjects.get(i).getOwner()!= null && this.subjects.get(i).getOwner().equals(client)){
+				this.subjects.remove(this.subjects.get(i));
+			}
+		}
+		
+		clients.remove(client);
+		
+		int connectedUsers = this.clients.size();
+		for(IClient c : this.clients){
+			c.getNewConnectedUsersNumber(connectedUsers);
+		}
+	}
+
 }

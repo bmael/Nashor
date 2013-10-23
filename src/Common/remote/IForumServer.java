@@ -16,9 +16,17 @@ import java.util.List;
 public interface IForumServer extends Remote {
 		
 	/**
+	 * Action to do when a client is connected to the server.
 	 * Increment the number of connected user by one.
 	 */
 	public void join(IClient client) throws RemoteException;
+	
+	/**
+	 * Action to do when a client is leaving the server.
+	 * @param client
+	 * @throws RemoteException
+	 */
+	public void left(IClient client) throws RemoteException;
 	
 	/**
 	 * Create the client subject.

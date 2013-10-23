@@ -3,11 +3,15 @@
  */
 package gui;
 
+import gui.actionlistener.MainWindowListener;
 import interfaces.IMainWindow;
 
 import java.awt.BorderLayout;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
+import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
@@ -59,6 +63,7 @@ public class MainWindow extends JFrame implements IMainWindow{
 		this.setLayout(new BorderLayout());
 		this.setSize(800, 400);
 		this.setVisible(true);
+		this.addWindowListener(new MainWindowListener(this.user));
 		
 		/*
 		 * Setting the system look & feel(look like any other application of your current OS).

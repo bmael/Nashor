@@ -100,4 +100,26 @@ public class Client extends UnicastRemoteObject implements IClient, IGUILaunchab
 		this.gui.updateConnectedUsersNumber(newValue);
 		return newValue;
 	}
+
+	@Override
+	public void exit() throws RemoteException {
+		this.server.left(this);
+	}
+	
+	@Override
+    public boolean equals(Object obj) {
+		if(obj==this){
+			return true;
+		}
+		
+		if(obj instanceof Client){
+			Client other = (Client) obj;
+			
+			if(this.id == other.id){
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }
