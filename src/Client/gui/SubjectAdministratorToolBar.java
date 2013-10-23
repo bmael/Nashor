@@ -4,6 +4,7 @@
 package gui;
 
 import gui.actionlistener.CreateNewSubjectActionListener;
+import gui.actionlistener.ShowSubjectsManagerActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JToolBar;
@@ -47,6 +48,7 @@ public class SubjectAdministratorToolBar extends JToolBar {
 		
 		this.subjectsListButton = new JButton("Subjects List");
 		this.subjectsListButton.setToolTipText("Display the list of all subjects created by you.");
+		this.subjectsListButton.addActionListener(new ShowSubjectsManagerActionListener(this.user));
 		this.add(this.subjectsListButton);
 	}
 }

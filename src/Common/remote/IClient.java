@@ -41,6 +41,13 @@ public interface IClient extends Remote {
 	public List<IServerSubject> getAvailableSubjects() throws RemoteException;
 	
 	/**
+	 * Get all subject of the client given in parameter.
+	 * @param the client that we have to retrieve its subjects.
+	 * @return the subjects of the client.
+	 */
+	public List<IServerSubject> getMySubject(IClient client) throws RemoteException;
+	
+	/**
 	 * Return the new subject created on the server.
 	 * @param the new subject created on the server.
 	 * @return The new server subject created on the server.

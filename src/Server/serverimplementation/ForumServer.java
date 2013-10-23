@@ -75,9 +75,9 @@ public class ForumServer extends UnicastRemoteObject
 	public List<IServerSubject> getSubjectsOfClient(IClient client)
 			throws RemoteException {
 		List<IServerSubject> res = new LinkedList<>();
-		
+		System.err.println("CLIENNNTTTTTTTT is : "+ client);
 		for(IServerSubject subject : this.subjects){
-			if(subject.getOwner().equals(client)){
+			if(subject.getOwner()!= null && subject.getOwner().equals(client)){
 				res.add(subject);
 			}
 		}
