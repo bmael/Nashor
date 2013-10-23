@@ -24,6 +24,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -42,6 +43,7 @@ public class ForumClient {
 	private static JLayeredPane desktop;
 	private static JPanel rightMenuPanel;
 	private static UserPanel userPanel;
+	private static JScrollPane subjectsScroller;
 	private static SubjectMenu subjects;
 	private static JLabel connectedUsers;
 
@@ -97,7 +99,9 @@ public class ForumClient {
 		rightMenuPanel.add(userPanel);
 		
 		subjects = new SubjectMenu(user);
-		rightMenuPanel.add(subjects);
+		subjectsScroller = new JScrollPane(subjects);
+		
+		rightMenuPanel.add(subjectsScroller);
 		
 		try {
 			connectedUsers = user.getConnectedUsersNumberLabel();
