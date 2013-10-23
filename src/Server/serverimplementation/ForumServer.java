@@ -143,9 +143,11 @@ public class ForumServer extends UnicastRemoteObject
 	public void left(IClient client) throws RemoteException {
 		
 		// remove all subject administrate by this client	
-		for(int i= this.subjects.size() - 1; i > 0; i-- ){
-			if(this.subjects.get(i).getOwner()!= null && this.subjects.get(i).getOwner().equals(client)){
-				this.subjects.remove(this.subjects.get(i));
+		List<IServerSubject> toRemove = new LinkedList<>(); 
+		
+		for(IServerSubject subject : this.subjects){
+			if(subject.getOwner()!= null && subject.getOwner().equals(client)){
+				toRemove.add(subject);
 			}
 		}
 		
@@ -154,7 +156,10 @@ public class ForumServer extends UnicastRemoteObject
 		int connectedUsers = this.clients.size();
 		for(IClient c : this.clients){
 			c.getNewConnectedUsersNumber(connectedUsers);
+			c.removeSubject(toRemove);
 		}
+		
+		this.subjects.removeAll(toRemove);
 	}
 
 }

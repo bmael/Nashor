@@ -2,6 +2,7 @@ package gui;
 
 import gui.actionlistener.SubjectActionListener;
 
+import java.awt.Component;
 import java.rmi.RemoteException;
 
 import javax.swing.BoxLayout;
@@ -50,6 +51,18 @@ public class SubjectMenu extends JPanel{
 		}
 
 		this.add(newButton);
+	}
+	
+	public void removeSubject(String title){
+		for(Component component : this.getComponents()){
+			JToggleButton button = (JToggleButton) component;
+			if(button.getText().equals(title)){
+				if(button.isSelected()){ // If the user is in the discussion we force him to quit it
+					button.doClick();
+				}
+				this.remove(button);
+			}
+		}
 	}
 }
 	

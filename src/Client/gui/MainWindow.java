@@ -7,8 +7,6 @@ import gui.actionlistener.MainWindowListener;
 import interfaces.IMainWindow;
 
 import java.awt.BorderLayout;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
@@ -141,6 +139,18 @@ public class MainWindow extends JFrame implements IMainWindow{
 	@Override
 	public void updateConnectedUsersNumber(int newValue) {
 		this.connectedUsers.setText("Connected Users: " + newValue);
+	}
+
+	@Override
+	public void removeSubjects(List<IServerSubject> subjects) {
+		for(IServerSubject subject : subjects){
+			try {
+				this.subjects.removeSubject(subject.getTitle());
+			} catch (RemoteException e) {
+				System.err.println("Unable to remove subject on the GUI...");
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }

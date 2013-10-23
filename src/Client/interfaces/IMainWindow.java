@@ -27,6 +27,12 @@ public interface IMainWindow {
 	public void addSubjects(List<IServerSubject> subjects);
 	
 	/**
+	 * Remove the given subjects on the GUI.
+	 * @param subjects to remove.
+	 */
+	public void removeSubjects(List<IServerSubject> subjects);
+	
+	/**
 	 * Update the connected users number.
 	 * @param newValue for the connected users number.
 	 */

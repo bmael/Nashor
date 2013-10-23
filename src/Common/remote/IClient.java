@@ -49,6 +49,13 @@ public interface IClient extends Remote {
 	public IServerSubject getNewSubject(IServerSubject subject) throws RemoteException;
 	
 	/**
+	 * Remove from the GUI subjects that have been removed from server.
+	 * @param subjects to remove from the GUI.
+	 * @throws RemoteException
+	 */
+	public void removeSubject(List<IServerSubject> subjects) throws RemoteException;
+	
+	/**
 	 * Return the new connected users value.
 	 * @param newValue for connected users.
 	 * @return The new connected users value.
