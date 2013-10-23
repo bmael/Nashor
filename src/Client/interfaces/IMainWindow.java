@@ -27,6 +27,12 @@ public interface IMainWindow {
 	public void addSubjects(List<IServerSubject> subjects);
 	
 	/**
+	 * Update the connected users number.
+	 * @param newValue for the connected users number.
+	 */
+	public void updateConnectedUsersNumber(int newValue);
+	
+	/**
 	 * Refresh the GUI.
 	 */
 	public void refresh();

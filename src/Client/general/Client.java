@@ -94,4 +94,10 @@ public class Client extends UnicastRemoteObject implements IClient, IGUILaunchab
 		this.refreshGUI();
 		return subject;
 	}
+
+	@Override
+	public int getNewConnectedUsersNumber(int newValue) throws RemoteException {
+		this.gui.updateConnectedUsersNumber(newValue);
+		return newValue;
+	}
 }

@@ -96,7 +96,7 @@ public class ForumServer extends UnicastRemoteObject
 	}
 
 	@Override
-	public synchronized void join(IClient client) {
+	public synchronized void join(IClient client) throws RemoteException {
 		
 		try {
 			this.getNewClientId(client);
@@ -109,7 +109,7 @@ public class ForumServer extends UnicastRemoteObject
 		int connectedClientNumber = this.clients.size();
 		
 		for(IClient c : this.clients){
-			//TODO
+			c.getNewConnectedUsersNumber(connectedClientNumber);
 		}
 	}
 

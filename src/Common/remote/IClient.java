@@ -43,6 +43,14 @@ public interface IClient extends Remote {
 	public IServerSubject getNewSubject(IServerSubject subject) throws RemoteException;
 	
 	/**
+	 * Return the new connected users value.
+	 * @param newValue for connected users.
+	 * @return The new connected users value.
+	 * @throws RemoteException
+	 */
+	public int getNewConnectedUsersNumber(int newValue) throws RemoteException;
+	
+	/**
 	 * Return the Id of this client.
 	 * @return this client id.
 	 */

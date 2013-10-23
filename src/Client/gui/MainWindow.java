@@ -132,5 +132,10 @@ public class MainWindow extends JFrame implements IMainWindow{
 	public void refresh() {
 		this.revalidate();
 	}
+
+	@Override
+	public void updateConnectedUsersNumber(int newValue) {
+		this.connectedUsers.setText("Connected Users: " + newValue);
+	}
 	
 }
