@@ -109,11 +109,7 @@ public class ForumServer extends UnicastRemoteObject
 		int connectedClientNumber = this.clients.size();
 		
 		for(IClient c : this.clients){
-			try {
-				c.updateConnectedUsersNumber(connectedClientNumber);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
+			//TODO
 		}
 	}
 
@@ -135,7 +131,12 @@ public class ForumServer extends UnicastRemoteObject
 	@Override
 	public void createSubject(String title, IClient owner)
 			throws RemoteException {
-		this.subjects.add(new ServerSubject(title, owner));
+		IServerSubject subject = new ServerSubject(title, owner);
+		this.subjects.add(subject);
+		
+		for(IClient c : this.clients){
+			c.getNewSubject(subject);
+		}
 	}
 
 }

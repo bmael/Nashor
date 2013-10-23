@@ -4,22 +4,7 @@ import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
 
-import javax.swing.JLabel;
-
-public interface IClient extends Remote{
-	
-	/**
-	 * Return the Connected Users Number Label of this client.
-	 * @return the JLabel of this client for connected users number.
-	 * @throws RemoteException
-	 */
-	public JLabel getConnectedUsersNumberLabel() throws RemoteException;
-	
-	/**
-	 * Update the number of connected user stored in this client.
-	 * @throws RemoteException
-	 */
-	public void updateConnectedUsersNumber(int newValue) throws RemoteException;
+public interface IClient extends Remote {
 	
 	/**
 	 * Set the name of this client.
@@ -48,6 +33,14 @@ public interface IClient extends Remote{
 	 * @throws RemoteException
 	 */
 	public List<IServerSubject> getAvailableSubjects() throws RemoteException;
+	
+	/**
+	 * Return the new subject created on the server.
+	 * @param the new subject created on the server.
+	 * @return The new server subject created on the server.
+	 * @throws RemoteException
+	 */
+	public IServerSubject getNewSubject(IServerSubject subject) throws RemoteException;
 	
 	/**
 	 * Return the Id of this client.

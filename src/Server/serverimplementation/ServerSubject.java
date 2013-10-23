@@ -78,5 +78,5 @@ public class ServerSubject extends UnicastRemoteObject implements IServerSubject
 	public IClient getOwner() throws RemoteException {
 		return this.owner;
 	}
-
+	
 }

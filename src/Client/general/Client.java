@@ -4,13 +4,12 @@
 package general;
 
 import gui.MainWindow;
+import interfaces.IGUILaunchable;
 import interfaces.IMainWindow;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
-
-import javax.swing.JLabel;
 
 import remote.IClient;
 import remote.IForumServer;
@@ -20,7 +19,7 @@ import remote.IServerSubject;
  * @author bmael
  *
  */
-public class Client extends UnicastRemoteObject implements IClient{
+public class Client extends UnicastRemoteObject implements IClient, IGUILaunchable{
 
 	/**
 	 * The generated serial UID.
@@ -33,8 +32,6 @@ public class Client extends UnicastRemoteObject implements IClient{
 	private IForumServer server;
 	private IMainWindow gui;
 	
-	//private JLabel connectedUsersNumber;
-	
 	public Client(IForumServer server) throws RemoteException {
 		id = id ++;
 		this.server = server;
@@ -46,7 +43,6 @@ public class Client extends UnicastRemoteObject implements IClient{
 	public Client(IForumServer server, String name) throws RemoteException {
 		id = id ++;
 		this.server = server;
-		//this.connectedUsersNumber = new JLabel("Connected users:" + 0);
 		this.name = name;
 		this.gui = new MainWindow(this);
 	}
@@ -57,17 +53,6 @@ public class Client extends UnicastRemoteObject implements IClient{
 	
 	public void setName(String name) throws RemoteException {
 		this.name = name;
-	}
-
-	@Override
-	public void updateConnectedUsersNumber(int newValue) throws RemoteException {
-		//this.connectedUsersNumber = new JLabel("Connected users:" + newValue);
-	}
-
-	@Override
-	public JLabel getConnectedUsersNumberLabel() throws RemoteException {
-		//return this.connectedUsersNumber;		
-		return null;
 	}
 
 	@Override
@@ -94,7 +79,19 @@ public class Client extends UnicastRemoteObject implements IClient{
 	public List<IServerSubject> getAvailableSubjects() throws RemoteException {
 		List<IServerSubject> subjects = this.server.getAllSubject(); 
 		this.gui.addSubjects(subjects);
-		this.gui.refresh();
+		this.refreshGUI();
 		return subjects;
+	}
+
+	@Override
+	public void refreshGUI() {
+		this.gui.refresh();
+	}
+
+	@Override
+	public IServerSubject getNewSubject(IServerSubject subject) throws RemoteException {
+		this.gui.addSubject(subject);
+		this.refreshGUI();
+		return subject;
 	}
 }
