@@ -71,14 +71,28 @@ public class ForumServer extends UnicastRemoteObject
 		return this.subjects;
 	}
 	
+	@Override
+	public List<IServerSubject> getSubjectsOfClient(IClient client)
+			throws RemoteException {
+		List<IServerSubject> res = new LinkedList<>();
+		
+		for(IServerSubject subject : this.subjects){
+			if(subject.getOwner().equals(client)){
+				res.add(subject);
+			}
+		}
+		
+		return res;
+	}
+	
 	/**
 	 * Create default subjects for the Nashor Chat.
 	 */
 	private void CreateDefaultSubjects() throws RemoteException{
-		this.subjects.add(new ServerSubject("Sports"));
-		this.subjects.add(new ServerSubject("Games"));
-		this.subjects.add(new ServerSubject("Movies"));
-		this.subjects.add(new ServerSubject("Cats"));
+		this.subjects.add(new ServerSubject("Sports", null));
+		this.subjects.add(new ServerSubject("Games", null));
+		this.subjects.add(new ServerSubject("Movies", null));
+		this.subjects.add(new ServerSubject("Cats", null));
 	}
 
 	@Override
@@ -117,4 +131,11 @@ public class ForumServer extends UnicastRemoteObject
 			client.setId(this.clients.get(this.clients.size() - 1).getId() + 1);
 		}
 	}
+
+	@Override
+	public void createSubject(String title, IClient owner)
+			throws RemoteException {
+		this.subjects.add(new ServerSubject(title, owner));
+	}
+
 }

@@ -32,4 +32,11 @@ public interface IServerSubject extends Remote {
 	 * @throws RemoteException
 	 */
 	public String getTitle() throws RemoteException;
+	
+	/**
+	 * Return this subject owner.
+	 * @return the owner of this subject or null if the subject is a default server subject.
+	 * @throws RemoteException
+	 */
+	public IClient getOwner() throws RemoteException;
 }

@@ -8,6 +8,7 @@ import java.rmi.server.UnicastRemoteObject;
 import java.util.LinkedList;
 import java.util.List;
 
+import remote.IClient;
 import remote.IMessageDisplayer;
 import remote.IServerSubject;
 
@@ -24,10 +25,18 @@ public class ServerSubject extends UnicastRemoteObject implements IServerSubject
 	
 	private List<IMessageDisplayer> messageDisplayers;
 	private String title;
+	private IClient owner;
 	
-	public ServerSubject(String title) throws RemoteException{
+	/**
+	 * Create a new subject.
+	 * @param title of the subject
+	 * @param owner of the subject (null if it a default server subject)
+	 * @throws RemoteException
+	 */
+	public ServerSubject(String title, IClient owner) throws RemoteException{
 		this.messageDisplayers = new LinkedList<>();
 		this.title = title;
+		this.owner = owner;
 	}
 	
 	/* (non-Javadoc)
@@ -63,6 +72,11 @@ public class ServerSubject extends UnicastRemoteObject implements IServerSubject
 	@Override
 	public String getTitle() throws RemoteException {
 		return this.title;
+	}
+
+	@Override
+	public IClient getOwner() throws RemoteException {
+		return this.owner;
 	}
 
 }

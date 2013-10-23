@@ -21,6 +21,14 @@ public interface IForumServer extends Remote {
 	public void join(IClient client) throws RemoteException;
 	
 	/**
+	 * Create the client subject.
+	 * @param title of the subject to create.
+	 * @param owner of the subject to create.
+	 * @throws RemoteException
+	 */
+	public void createSubject(String title, IClient owner) throws RemoteException;
+	
+	/**
 	 * Return the subject with the associated name.
 	 * @param title, the title of subject to return.
 	 * @return the subject with the name given in parameter.
@@ -34,6 +42,14 @@ public interface IForumServer extends Remote {
 	 * @throws RemoteException
 	 */
 	public List<IServerSubject> getAllSubject() throws RemoteException;
+	
+	/**
+	 * Return the list of subjects created by the client given in parameter.
+	 * @param client is the owner of returned subjects 
+	 * @return a list of subjects.
+	 * @throws RemoteException
+	 */
+	public List<IServerSubject> getSubjectsOfClient(IClient client) throws RemoteException;
 	
 	/**
 	 * This is a test method. Called by a client, the server write "HELLO!!!".

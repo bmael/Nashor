@@ -5,6 +5,7 @@ package launcher;
 
 import general.Client;
 import gui.BackgroundPanel;
+import gui.SubjectAdministratorToolBar;
 import gui.SubjectMenu;
 import gui.UserPanel;
 
@@ -40,18 +41,22 @@ public class ForumClient {
 	/* GUI part */
 	private static JFrame mainWindow;
 	private static JPanel windowPanel;
+	private static SubjectAdministratorToolBar toolBar;
 	private static JLayeredPane desktop;
 	private static JPanel rightMenuPanel;
 	private static UserPanel userPanel;
 	private static JScrollPane subjectsScroller;
 	private static SubjectMenu subjects;
 	private static JLabel connectedUsers;
-
 	
 	/* Client part */
 	private static Client user;
 	private static String serverAddress;
 	
+	/**
+	 * Initialize the main window.
+	 * Precondition : have to be called after the user initialization.
+	 */
 	private static void initMainWindow(){
 		mainWindow = new JFrame("Nashor Chat");
 		mainWindow.setLayout(new BorderLayout());
@@ -60,7 +65,6 @@ public class ForumClient {
 		
 		/*
 		 * Setting the system look & feel(The applet will look like any other application of your current OS).
-		 * DON'T KILL ME
 		 */
 		// Set cross-platform Java L&F (also called "Metal")
 		try {
@@ -70,7 +74,7 @@ public class ForumClient {
 			e1.printStackTrace();
 		}
 		
-		// The panel of the mainwindow
+		// The panel of the main window
 		try {
 			windowPanel = new BackgroundPanel(
 					ImageIO.read(new File(
@@ -85,6 +89,9 @@ public class ForumClient {
 		
 		windowPanel.setLayout(new BorderLayout());
 
+		toolBar = new SubjectAdministratorToolBar(user);
+		windowPanel.add(toolBar, BorderLayout.NORTH);
+		
 		desktop = new JLayeredPane();
 		desktop.setOpaque(false);
 		
