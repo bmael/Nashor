@@ -20,6 +20,9 @@ public class ForumServerLauncher {
 	 */
 	public static void main(String[] args) {
 		try{
+			
+			System.setProperty("java.rmi.server.hostname", InetAddress.getLocalHost().getHostAddress());
+			
 			try {
 				System.out.println("Trying to registry port 1099");
 				LocateRegistry.createRegistry(1099);
