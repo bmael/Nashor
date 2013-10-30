@@ -33,7 +33,7 @@ import remote.IServerSubject;
 public class MainWindow extends JFrame implements IMainWindow{
 
 	/**
-	 * The generated servial version UID.
+	 * The generated serial version UID.
 	 */
 	private static final long serialVersionUID = 2740437090361841747L;
 
