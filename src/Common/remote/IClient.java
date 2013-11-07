@@ -56,6 +56,13 @@ public interface IClient extends Remote {
 	public IServerSubject getNewSubject(IServerSubject subject) throws RemoteException;
 	
 	/**
+	 * Replace the old subjects list with the new one given in parameter.
+	 * @param oldValue the old subjects list
+	 * @param newValue the new available subjects list
+	 * @throws RemoteException
+	 */
+	public void updateSubjectsList(List<IServerSubject> oldValue, List<IServerSubject> newValue) throws RemoteException;
+		/**
 	 * Remove from the GUI subjects that have been removed from server.
 	 * @param subjects to remove from the GUI.
 	 * @throws RemoteException

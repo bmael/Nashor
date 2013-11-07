@@ -39,4 +39,5 @@ public interface IServerSubject extends Remote {
 	 * @throws RemoteException
 	 */
 	public IClient getOwner() throws RemoteException;
+	
 }
