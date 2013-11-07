@@ -135,4 +135,16 @@ public class Client extends UnicastRemoteObject implements IClient, IGUILaunchab
 			throws RemoteException {
 		return server.getSubjectsOfClient(client);
 	}
+
+	@Override
+	public void updateSubjectsList(List<IServerSubject> oldValue, List<IServerSubject> newValue)
+			throws RemoteException {
+		
+		System.out.println(oldValue);
+		System.out.println(newValue);
+		this.gui.removeSubjects(oldValue);
+		this.gui.addSubjects(newValue);
+		
+		this.gui.refresh();
+	}
 }

@@ -152,5 +152,5 @@ public class MainWindow extends JFrame implements IMainWindow{
 			}
 		}
 	}
-	
+
 }
