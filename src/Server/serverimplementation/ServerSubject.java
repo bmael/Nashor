@@ -79,4 +79,9 @@ public class ServerSubject extends UnicastRemoteObject implements IServerSubject
 		return this.owner;
 	}
 	
+	@Override
+	public String toString(){
+		return this.title;
+	}
+	
 }
