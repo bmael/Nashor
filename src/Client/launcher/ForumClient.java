@@ -43,7 +43,7 @@ public class ForumClient {
 				String url = "//" + InetAddress.getLocalHost().getHostAddress() + 
 								"/NashorServer";
 				
-				System.out.println("Looking up for Nashor Server at: " + url);
+				System.out.println("Looking up for Nashor Server at: " + serverAddress);
 				IForumServer server = (IForumServer) Naming.lookup(serverAddress);
 				
 				System.out.println("Server should say hello...");
@@ -51,10 +51,20 @@ public class ForumClient {
 				
 				// Launch the client with the initialized server.
 				user = new Client(server);
-				server.join(user);	
+				try{
+					server.join(user);	
+				}catch(RemoteException e){
+					e.printStackTrace();
+					System.err.println("Unable to join the server...");
+				}
+				
 				
 				//Retrieve the list of available subjects on the server.
-				user.getAvailableSubjects();
+				try{
+					user.getAvailableSubjects();
+				}catch(RemoteException e){
+					e.printStackTrace();System.err.println("Unable to retrieve the subjects list");
+				}
 				
 			} catch (RemoteException e) {
 				e.printStackTrace();
