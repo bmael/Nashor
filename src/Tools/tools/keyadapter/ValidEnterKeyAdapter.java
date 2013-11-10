@@ -1,7 +1,7 @@
 /**
  * 
  */
-package client.mainwindow.keyadapter;
+package tools.keyadapter;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
