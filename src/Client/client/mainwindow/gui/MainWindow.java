@@ -131,6 +131,7 @@ public class MainWindow extends JFrame implements IMainWindow{
 	@Override
 	public void addSubject(IServerSubject subject) {
 		this.subjects.addSubject(subject, this.desktop);
+		this.subjectSearcher.updateAutoCompleteDoc(this.subjects.getAllSubject());
 	}
 
 	@Override
@@ -160,6 +161,7 @@ public class MainWindow extends JFrame implements IMainWindow{
 				e.printStackTrace();
 			}
 		}
+		this.subjectSearcher.updateAutoCompleteDoc(this.subjects.getAllSubject());
 	}
 	
 }

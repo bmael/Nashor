@@ -3,6 +3,8 @@
  */
 package client.subjectsearcher.gui;
 
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -10,6 +12,7 @@ import javax.swing.JTextField;
 import org.jdesktop.xswingx.PromptSupport;
 
 import tools.keyadapter.ValidEnterKeyAdapter;
+import tools.textfield.AutoCompleteDocument;
 import client.mainwindow.gui.SubjectMenu;
 import client.subjectsearcher.actionlistener.SearchActionListener;
 
@@ -28,11 +31,13 @@ public class SubjectSearcher extends JPanel {
 	private JButton validation;
 	
 	private SubjectMenu subjects;
+	private ArrayList<String> dict;
 	
 	public SubjectSearcher(SubjectMenu subjects){
 		this.subjects = subjects;
 		
-		this.searchField = new JTextField(10);
+		this.dict = this.subjects.getAllSubject();
+		this.searchField = AutoCompleteDocument.createAutoCompleteTextField(this.dict); // have to find a way to refresh internal dict...
 		PromptSupport.setPrompt("Search a subject", this.searchField);
 		this.add(this.searchField);
 		
@@ -41,5 +46,12 @@ public class SubjectSearcher extends JPanel {
 		this.add(this.validation);
 		
 		this.searchField.addKeyListener(new ValidEnterKeyAdapter(this.validation));
+	}
+	
+	public void updateAutoCompleteDoc(ArrayList<String> dict){
+		this.dict = dict;
+		for (String string : dict) {
+			System.out.println(" - " + string);
+		}
 	}
 }

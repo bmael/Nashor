@@ -2,6 +2,10 @@ package client.mainwindow.gui;
 
 import java.awt.Component;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.LinkedBlockingDeque;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -78,6 +82,15 @@ public class SubjectMenu extends JPanel{
 		}
 		
 		return null;
+	}
+	
+	public ArrayList<String> getAllSubject(){
+		ArrayList<String> res = new ArrayList<>();
+		for(Component component : this.getComponents()){
+			JToggleButton button = (JToggleButton) component;
+			res.add(button.getText());
+		}
+		return res;
 	}
 }
 	
