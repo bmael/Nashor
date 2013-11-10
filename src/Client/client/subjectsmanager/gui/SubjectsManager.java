@@ -15,6 +15,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import client.subjectsmanager.actionlistener.CreateNewSubjectActionListener;
+import client.subjectsmanager.actionlistener.DeleteSubjectActionListener;
 import client.subjectsmanager.table.SubjectsTable;
 import common.remote.IClient;
 import common.remote.IServerSubject;
@@ -50,6 +51,7 @@ public class SubjectsManager extends JDialog {
 		this.setModal(true);
 		this.setLayout(new BorderLayout());
 		this.setSize(250, 400);
+		this.setResizable(false);
 
 		this.createSubjectsTableComponent();
 

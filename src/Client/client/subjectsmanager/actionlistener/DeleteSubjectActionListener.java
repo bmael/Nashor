@@ -1,7 +1,7 @@
 /**
  * 
  */
-package client.subjectsmanager.gui;
+package client.subjectsmanager.actionlistener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,10 +33,25 @@ public class DeleteSubjectActionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		DefaultTableModel model = (DefaultTableModel) this.table.getModel();
-		
-		for (int row : this.table.getSelectedRows()) {
+		// Have to replace it with a secure loop.
+//		for (int row : this.table.getSelectedRows()) {
+//			String valueAt = (String) model.getValueAt(row, 0);
+//			System.out.println("Trying to remove row: " + row);
+//			try {
+//				this.user.getServer().removeSubject(valueAt);
+//			} catch (RemoteException e1) {
+//				e1.printStackTrace();
+//				System.err.println("Unable to remove a subject: " + valueAt);
+//			}
+//		model.removeRow(row);
+//	}
+			
+		for(int index = this.table.getSelectedRowCount() - 1; index >= 0; index--){
+			int row = this.table.getSelectedRows()[index];
+			
 			String valueAt = (String) model.getValueAt(row, 0);
 			System.out.println("Trying to remove row: " + row);
+			
 			try {
 				this.user.getServer().removeSubject(valueAt);
 			} catch (RemoteException e1) {
@@ -46,6 +61,9 @@ public class DeleteSubjectActionListener implements ActionListener {
 			
 			model.removeRow(row);
 		}
+			
+			
+		
 	}
 
 }

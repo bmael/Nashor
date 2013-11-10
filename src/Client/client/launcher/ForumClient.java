@@ -39,8 +39,8 @@ public class ForumClient {
 							
 			//server lookup
 			try{
-				String url = "//" + InetAddress.getLocalHost().getHostAddress() + 
-								"/NashorServer";
+//				String url = "//" + InetAddress.getLocalHost().getHostAddress() + 
+//								"/NashorServer";
 				
 				System.out.println("Looking up for Nashor Server at: " + serverAddress);
 				IForumServer server = (IForumServer) Naming.lookup(serverAddress);
