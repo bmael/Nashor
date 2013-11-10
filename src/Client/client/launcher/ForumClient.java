@@ -38,10 +38,7 @@ public class ForumClient {
 			}
 							
 			//server lookup
-			try{
-//				String url = "//" + InetAddress.getLocalHost().getHostAddress() + 
-//								"/NashorServer";
-				
+			try{				
 				System.out.println("Looking up for Nashor Server at: " + serverAddress);
 				IForumServer server = (IForumServer) Naming.lookup(serverAddress);
 				
@@ -56,8 +53,7 @@ public class ForumClient {
 					e.printStackTrace();
 					System.err.println("Unable to join the server...");
 				}
-				
-				
+					
 				//Retrieve the list of available subjects on the server.
 				try{
 					user.getAvailableSubjects();
