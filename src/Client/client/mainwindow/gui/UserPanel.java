@@ -1,16 +1,14 @@
 package client.mainwindow.gui;
 
-import java.awt.Color;
-
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import org.jdesktop.xswingx.PromptSupport;
 
+import tools.keyadapter.ValidEnterKeyAdapter;
 import client.actionlistener.ValidUserNameActionListener;
-import client.mainwindow.keyadapter.ValidEnterKeyAdapter;
+
 import common.remote.IClient;
 
 public class UserPanel extends JPanel{
@@ -42,9 +40,7 @@ public class UserPanel extends JPanel{
 		this.name.addKeyListener(new ValidEnterKeyAdapter(this.validButton));
 		
 		this.add(name);
-		this.add(validButton);
-		
-		this.setBorder(BorderFactory.createLineBorder(Color.black));		
+		this.add(validButton);	
 	}
 	
 }

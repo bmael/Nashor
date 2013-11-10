@@ -4,12 +4,14 @@
 package client.mainwindow.gui;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
 import java.rmi.RemoteException;
 import java.util.List;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,10 +21,11 @@ import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import tools.background.BackgroundPanel;
 import client.mainwindow.windowlistener.MainWindowListener;
+import client.subjectsearcher.gui.SubjectSearcher;
 import common.remote.IClient;
 import common.remote.IServerSubject;
-import tools.background.BackgroundPanel;
 
 /**
  * This class provide the main frame for a client.
@@ -44,6 +47,7 @@ public class MainWindow extends JFrame implements IMainWindow{
 	
 	private JPanel rightMenuPanel;
 	private UserPanel userPanel;
+	private SubjectSearcher subjectSearcher;
 	private JScrollPane subjectsScroller;
 	private SubjectMenu subjects;
 	private JLabel connectedUsers;
@@ -105,12 +109,18 @@ public class MainWindow extends JFrame implements IMainWindow{
 		this.rightMenuPanel.add(userPanel);
 		
 		this.subjects = new SubjectMenu(user);
+		
+		this.subjectSearcher = new SubjectSearcher(this.subjects);
+		this.rightMenuPanel.add(this.subjectSearcher);
+		
 		this.subjectsScroller = new JScrollPane(this.subjects);
 		
 		this.rightMenuPanel.add(this.subjectsScroller);
 		
 		this.connectedUsers = new JLabel("Connected users: ");
 		this.rightMenuPanel.add(this.connectedUsers);
+		
+		this.rightMenuPanel.setBorder(BorderFactory.createLineBorder(Color.black));	
 		
 		this.add(windowPanel, BorderLayout.CENTER);
 		this.add(rightMenuPanel, BorderLayout.EAST);
@@ -151,5 +161,5 @@ public class MainWindow extends JFrame implements IMainWindow{
 			}
 		}
 	}
-
+	
 }

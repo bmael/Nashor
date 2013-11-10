@@ -63,5 +63,21 @@ public class SubjectMenu extends JPanel{
 			}
 		}
 	}
+	
+	/**
+	 * Return the subject button component associated to the title given in parameter.
+	 * @param title the title of the button to return.
+	 * @return a button component or null if no button could be return.
+	 */
+	public JToggleButton getSubjectsButton(String title){
+		for(Component component : this.getComponents()){
+			JToggleButton button = (JToggleButton) component;
+			if(button.getText().equalsIgnoreCase(title)){
+				return button;
+			}
+		}
+		
+		return null;
+	}
 }
 	

@@ -18,8 +18,8 @@ import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import javax.swing.text.StyleContext;
 
+import tools.keyadapter.ValidEnterKeyAdapter;
 import client.actionlistener.SendMessageActionListener;
-import client.mainwindow.keyadapter.ValidEnterKeyAdapter;
 import common.remote.IClient;
 import common.remote.IServerSubject;
 
