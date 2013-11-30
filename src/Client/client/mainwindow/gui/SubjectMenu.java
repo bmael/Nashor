@@ -3,9 +3,6 @@ package client.mainwindow.gui;
 import java.awt.Component;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.concurrent.LinkedBlockingDeque;
 
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -13,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 
 import client.actionlistener.SubjectActionListener;
+
 import common.remote.IClient;
 import common.remote.IServerSubject;
 
@@ -42,7 +40,8 @@ public class SubjectMenu extends JPanel{
 	
 	/**
 	 * Add a new subject to the current subject menu.
-	 * @param subjectName
+	 * @param subject the subject to add.
+	 * @param dialogPanel the UI component of the subject.
 	 */
 	public void addSubject(IServerSubject subject, JComponent dialogPanel){
 		JToggleButton newButton = new JToggleButton();
@@ -52,10 +51,13 @@ public class SubjectMenu extends JPanel{
 		} catch (RemoteException e) {
 			e.printStackTrace();
 		}
-
 		this.add(newButton);
 	}
 	
+	/**
+	 * Remove the subject with the given name in parameter.
+	 * @param title the title of the subject to remove.
+	 */
 	public void removeSubject(String title){
 		for(Component component : this.getComponents()){
 			JToggleButton button = (JToggleButton) component;
@@ -80,7 +82,6 @@ public class SubjectMenu extends JPanel{
 				return button;
 			}
 		}
-		
 		return null;
 	}
 	
