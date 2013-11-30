@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="src" path="Client"/>
+	<classpathentry kind="src" path="Tools"/>
+	<classpathentry kind="src" path="Common"/>
 	<classpathentry kind="src" path="Server"/>
+	<classpathentry kind="src" path="Client"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="F:/Dev/Projet/NashorChat/lib/prompt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
