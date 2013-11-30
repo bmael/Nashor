@@ -28,6 +28,7 @@ import tools.internalframe.SelfInternalFrameAdapter;
 public class SubjectActionListener implements ActionListener {
 
 	private IServerSubject subject;
+	private String title;
 	private IMessageDisplayer displayer;
 	private IClient user;
 	
@@ -42,6 +43,12 @@ public class SubjectActionListener implements ActionListener {
 	 */
 	public SubjectActionListener(IServerSubject subject, JComponent dialogPanel, IClient user){
 		this.subject = subject;
+		try {
+			this.title = subject.getTitle();
+		} catch (RemoteException e1) {
+			System.err.println("Unable to get the subject title.");
+			e1.printStackTrace();
+		}
 		this.user = user;
 		
 		try{
@@ -80,7 +87,7 @@ public class SubjectActionListener implements ActionListener {
 			
 			try {
 				this.subject.join(displayer);
-				System.out.println("A displayer joined subject: " + subject.getTitle());
+				System.out.println("A displayer joined subject: " + this.title);
 				this.subject.broadcast("New User joins the discussion...");
 			} catch (RemoteException e) {
 				e.printStackTrace();
@@ -88,7 +95,7 @@ public class SubjectActionListener implements ActionListener {
 
 		}else{ //else : the client have already click, he leaves the discussion
 			try {
-				System.out.println("A displayer leave subject: " + subject.getTitle());
+				System.out.println("A displayer leave subject: " + this.title);
 				this.subject.leave(displayer);
 				this.subject.broadcast(this.user.getName() + " has left the discussion...");
 				dialogPanel.remove(frame);

@@ -3,6 +3,9 @@
  */
 package server.implementation;
 
+import java.net.MalformedURLException;
+import java.rmi.Naming;
+import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.Date;
@@ -15,12 +18,11 @@ import common.remote.IServerSubject;
 
 /**
  * This class provides an implementation of the forum server.
+ * 
  * @author bmael
- *
+ * 
  */
-public class ForumServer extends UnicastRemoteObject 
-implements IForumServer
-{
+public class ForumServer extends UnicastRemoteObject implements IForumServer {
 
 	/**
 	 * The generated serial version UID
@@ -40,21 +42,26 @@ implements IForumServer
 	/**
 	 * Construct a new instance of the ForumServer/.
 	 */
-	public ForumServer() throws RemoteException{
+	public ForumServer() throws RemoteException {
 		this.subjects = new LinkedList<>();
 		this.clients = new LinkedList<>();
-		this.CreateDefaultSubjects();
+		// this.CreateDefaultSubjects();
 	}
 
 	/**
-	 * Return the subject from the server according to the title given in parameter.
-	 * @param title, the title of the subject to return.
-	 * @return the subject with the given title, or null if no subject has the given title.
+	 * Return the subject from the server according to the title given in
+	 * parameter.
+	 * 
+	 * @param title
+	 *            , the title of the subject to return.
+	 * @return the subject with the given title, or null if no subject has the
+	 *         given title.
 	 */
 	@Override
-	public synchronized IServerSubject getSubject(String title) throws RemoteException {
-		for(IServerSubject subject : this.subjects){
-			if(subject.getTitle().equals(title)){
+	public synchronized IServerSubject getSubject(String title)
+			throws RemoteException {
+		for (IServerSubject subject : this.subjects) {
+			if (subject.getTitle().equals(title)) {
 				return subject;
 			}
 		}
@@ -67,7 +74,8 @@ implements IForumServer
 	}
 
 	@Override
-	public synchronized List<IServerSubject> getAllSubject() throws RemoteException {
+	public synchronized List<IServerSubject> getAllSubject()
+			throws RemoteException {
 		return this.subjects;
 	}
 
@@ -75,9 +83,9 @@ implements IForumServer
 	public synchronized List<IServerSubject> getSubjectsOfClient(IClient client)
 			throws RemoteException {
 		List<IServerSubject> res = new LinkedList<>();
-		System.err.println("CLIENNNTTTTTTTT is : "+ client);
-		for(IServerSubject subject : this.subjects){
-			if(subject.getOwner()!= null && subject.getOwner().equals(client)){
+		System.err.println("CLIENNNTTTTTTTT is : " + client);
+		for (IServerSubject subject : this.subjects) {
+			if (subject.getOwner() != null && subject.getOwner().equals(client)) {
 				res.add(subject);
 			}
 		}
@@ -88,12 +96,12 @@ implements IForumServer
 	/**
 	 * Create default subjects for the Nashor Chat.
 	 */
-	private synchronized void CreateDefaultSubjects() throws RemoteException{
-		this.subjects.add(new ServerSubject("Sports", null));
-		this.subjects.add(new ServerSubject("Games", null));
-		this.subjects.add(new ServerSubject("Movies", null));
-		this.subjects.add(new ServerSubject("Cats", null));
-	}
+	// private synchronized void CreateDefaultSubjects() throws RemoteException{
+	// this.subjects.add(new ServerSubject("Sports", null));
+	// this.subjects.add(new ServerSubject("Games", null));
+	// this.subjects.add(new ServerSubject("Movies", null));
+	// this.subjects.add(new ServerSubject("Cats", null));
+	// }
 
 	@Override
 	public synchronized void join(IClient client) throws RemoteException {
@@ -108,7 +116,7 @@ implements IForumServer
 
 		int connectedClientNumber = this.clients.size();
 
-		for(IClient c : this.clients){
+		for (IClient c : this.clients) {
 			c.getNewConnectedUsersNumber(connectedClientNumber);
 		}
 	}
@@ -119,33 +127,59 @@ implements IForumServer
 		return now;
 	}
 
-	private synchronized void getNewClientId(IClient client) throws RemoteException {
-		if(this.clients.isEmpty()){
+	private synchronized void getNewClientId(IClient client)
+			throws RemoteException {
+		if (this.clients.isEmpty()) {
 			client.setId(1);
-		}
-		else{
+		} else {
 			client.setId(this.clients.get(this.clients.size() - 1).getId() + 1);
 		}
 	}
 
 	@Override
-	public synchronized void createSubject(String title, IClient owner)
-			throws RemoteException {
+	public synchronized void createSubject(String url, String title,
+			IClient owner) throws RemoteException {
+
 		IServerSubject subject = new ServerSubject(title, owner);
+		System.out.println(" ** Storing the " + title + " subject with url: "
+				+ url);
+		try {
+			Naming.rebind(url, subject);
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println(" ** " + title + " subject is online");
+
 		this.subjects.add(subject);
 
-		for(IClient c : this.clients){
+		for (IClient c : this.clients) {
 			c.getNewSubject(subject);
 		}
 	}
 
 	@Override
-	public synchronized void removeSubject(String title) throws RemoteException {
+	public void createSubject(IServerSubject subject) throws RemoteException {
+		this.subjects.add(subject);
+	}
+
+	@Override
+	public synchronized void removeSubject(String url, String title)
+			throws RemoteException {
 		List<IServerSubject> old = new LinkedList<>(this.subjects);
+
 		this.subjects.remove(this.getSubject(title));
-		
-		for(IClient c : this.clients){
+
+		for (IClient c : this.clients) {
 			c.updateSubjectsList(old, subjects);
+		}
+		
+		try {
+			System.out.println(" ** Unbinding " + title + " subject");
+			Naming.unbind(url);
+			System.out.println(" ** " + title + " subject exiting.");
+		} catch (MalformedURLException | NotBoundException e) {
+			e.printStackTrace();
 		}
 
 	}
@@ -153,11 +187,11 @@ implements IForumServer
 	@Override
 	public synchronized void left(IClient client) throws RemoteException {
 
-		// remove all subject administrate by this client	
-		List<IServerSubject> toRemove = new LinkedList<>(); 
+		// remove all subject administrated by this client
+		List<IServerSubject> toRemove = new LinkedList<>();
 
-		for(IServerSubject subject : this.subjects){
-			if(subject.getOwner()!= null && subject.getOwner().equals(client)){
+		for (IServerSubject subject : this.subjects) {
+			if (subject.getOwner() != null && subject.getOwner().equals(client)) {
 				toRemove.add(subject);
 			}
 		}
@@ -165,12 +199,11 @@ implements IForumServer
 		clients.remove(client);
 
 		int connectedUsers = this.clients.size();
-		for(IClient c : this.clients){
+		for (IClient c : this.clients) {
 			c.getNewConnectedUsersNumber(connectedUsers);
 			c.removeSubject(toRemove);
 		}
 
 		this.subjects.removeAll(toRemove);
 	}
-
 }

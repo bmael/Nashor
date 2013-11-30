@@ -10,7 +10,7 @@ import java.rmi.RemoteException;
 
 import javax.swing.JOptionPane;
 
-import client.Client;
+import client.implementation.Client;
 import common.remote.IForumServer;
 
 /**
