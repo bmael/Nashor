@@ -39,25 +39,16 @@ public class ServerSubject extends UnicastRemoteObject implements IServerSubject
 		this.owner = owner;
 	}
 	
-	/* (non-Javadoc)
-	 * @see remote.IServerSubject#join(remote.IMessageDisplayer)
-	 */
 	@Override
-	public void join(IMessageDisplayer c) throws RemoteException {
+	public synchronized void join(IMessageDisplayer c) throws RemoteException {
 		this.messageDisplayers.add(c);
 	}
 
-	/* (non-Javadoc)
-	 * @see remote.IServerSubject#left(remote.IMessageDisplayer)
-	 */
 	@Override
-	public void leave(IMessageDisplayer c) throws RemoteException {
+	public synchronized void leave(IMessageDisplayer c) throws RemoteException {
 		this.messageDisplayers.remove(c);
 	}
 
-	/* (non-Javadoc)
-	 * @see remote.IServerSubject#broadcast(java.lang.String)
-	 */
 	@Override
 	public void broadcast(String message) throws RemoteException {
 		for (IMessageDisplayer displayer : this.messageDisplayers) {
@@ -66,9 +57,6 @@ public class ServerSubject extends UnicastRemoteObject implements IServerSubject
 		}
 	}
 
-	/* (non-Javadoc)
-	 * @see remote.IServerSubject#getTitle()
-	 */
 	@Override
 	public String getTitle() throws RemoteException {
 		return this.title;
