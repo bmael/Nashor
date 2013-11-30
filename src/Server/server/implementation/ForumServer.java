@@ -72,7 +72,7 @@ implements IForumServer
 	}
 
 	@Override
-	public List<IServerSubject> getSubjectsOfClient(IClient client)
+	public synchronized List<IServerSubject> getSubjectsOfClient(IClient client)
 			throws RemoteException {
 		List<IServerSubject> res = new LinkedList<>();
 		System.err.println("CLIENNNTTTTTTTT is : "+ client);
@@ -88,7 +88,7 @@ implements IForumServer
 	/**
 	 * Create default subjects for the Nashor Chat.
 	 */
-	private void CreateDefaultSubjects() throws RemoteException{
+	private synchronized void CreateDefaultSubjects() throws RemoteException{
 		this.subjects.add(new ServerSubject("Sports", null));
 		this.subjects.add(new ServerSubject("Games", null));
 		this.subjects.add(new ServerSubject("Movies", null));
@@ -114,12 +114,12 @@ implements IForumServer
 	}
 
 	@Override
-	public Date getDate() throws RemoteException {
+	public synchronized Date getDate() throws RemoteException {
 		Date now = new Date();
 		return now;
 	}
 
-	private void getNewClientId(IClient client) throws RemoteException {
+	private synchronized void getNewClientId(IClient client) throws RemoteException {
 		if(this.clients.isEmpty()){
 			client.setId(1);
 		}
@@ -129,7 +129,7 @@ implements IForumServer
 	}
 
 	@Override
-	public void createSubject(String title, IClient owner)
+	public synchronized void createSubject(String title, IClient owner)
 			throws RemoteException {
 		IServerSubject subject = new ServerSubject(title, owner);
 		this.subjects.add(subject);
@@ -140,7 +140,7 @@ implements IForumServer
 	}
 
 	@Override
-	public void removeSubject(String title) throws RemoteException {
+	public synchronized void removeSubject(String title) throws RemoteException {
 		List<IServerSubject> old = new LinkedList<>(this.subjects);
 		this.subjects.remove(this.getSubject(title));
 		
@@ -151,7 +151,7 @@ implements IForumServer
 	}
 
 	@Override
-	public void left(IClient client) throws RemoteException {
+	public synchronized void left(IClient client) throws RemoteException {
 
 		// remove all subject administrate by this client	
 		List<IServerSubject> toRemove = new LinkedList<>(); 
