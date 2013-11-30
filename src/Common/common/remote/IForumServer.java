@@ -30,18 +30,27 @@ public interface IForumServer extends Remote {
 	
 	/**
 	 * Create the client subject.
+	 * @param url of the remote subject.
 	 * @param title of the subject to create.
 	 * @param owner of the subject to create.
 	 * @throws RemoteException
 	 */
-	public void createSubject(String title, IClient owner) throws RemoteException;
+	public void createSubject(String url, String title, IClient owner) throws RemoteException;
+	
+	/**
+	 * Add a IServerSubject.
+	 * @param subject the subject to add.
+	 * @throws RemoteException
+	 */
+	public void createSubject(IServerSubject subject) throws RemoteException;
 	
 	/**
 	 * Remove the subject with the name given in parameter.
+	 * @param url of the remote subject to delete.
 	 * @param title of subject to remove.
 	 * @throws RemoteException
 	 */
-	public void removeSubject(String title) throws RemoteException;
+	public void removeSubject(String url, String title) throws RemoteException;
 	
 	/**
 	 * Return the subject with the associated name.

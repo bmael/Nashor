@@ -5,6 +5,8 @@ package client.subjectsmanager.actionlistener;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.rmi.RemoteException;
 
 import javax.swing.JOptionPane;
@@ -28,16 +30,19 @@ public class CreateNewSubjectActionListener implements ActionListener {
 		this.subjectsTable = subjectsTable;
 	}
 	
-	/* (non-Javadoc)
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		String title = JOptionPane.showInputDialog("What is the title of your subject?", null);
 		
 		if(title!= null && title!= "" && title.length() > 0){
 			try {
-				this.user.getServer().createSubject(title, this.user);
+				String address = null;
+				try {
+					address = "//" + InetAddress.getLocalHost().getHostAddress() + "/" + title;
+					this.user.getServer().createSubject(address, title, this.user);
+				} catch (UnknownHostException e) {
+					e.printStackTrace();
+				}
 				
 				DefaultTableModel model = (DefaultTableModel) this.subjectsTable.getModel();
 				Object[] newValue = new Object[1];

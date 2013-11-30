@@ -1,12 +1,13 @@
 /**
  * 
  */
-package client;
+package client.implementation;
 
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
 
+import client.IGUILaunchable;
 import client.mainwindow.gui.IMainWindow;
 import client.mainwindow.gui.MainWindow;
 import common.remote.IClient;
